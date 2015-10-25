@@ -1,0 +1,26 @@
+//
+//  C3IndoorLocation-PrefixHeader.pch
+//  C3IndoorLocation
+//
+//  Created by zhaoguoqi on 15/10/25.
+//  Copyright © 2015年 zhaoguoqi. All rights reserved.
+//
+
+#ifndef C3IndoorLocation_PrefixHeader_pch
+#define C3IndoorLocation_PrefixHeader_pch
+
+#import <Availability.h>
+
+#ifndef __IPHONE_5_0
+#warning "This project uses features only available in iOS SDK 5.0 and later."
+#endif
+
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#endif
+
+#endif 
+
+
+

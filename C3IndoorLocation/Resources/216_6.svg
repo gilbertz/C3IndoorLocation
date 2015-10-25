@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Created by SVGDeveloper 1.0 -->
+
+  <svg version="1.1" id="jz" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0x" y="0px"
+   width="3000px" height="3000px" viewBox="-10 -10 3000 3000" enable-background="new 0 0 3000 3000" xml:space="preserve" >
+   <g transform="rotate(-40)">
+<line x1="0" y1="0" x2="0" y2="6" style="stroke:rgb(255,0,0);stroke-width:0.05"/>
+<line x1="1" y1="0" x2="1" y2="6" style="stroke:rgb(255,0,0);stroke-width:0.05"/>
+<line x1="2" y1="0" x2="2" y2="6" style="stroke:rgb(255,0,0);stroke-width:0.05"/>
+<line x1="3" y1="0" x2="3" y2="6" style="stroke:rgb(255,0,0);stroke-width:0.05"/>
+<line x1="4" y1="0" x2="4" y2="6" style="stroke:rgb(255,0,0);stroke-width:0.05"/>
+<line x1="5" y1="0" x2="5" y2="6" style="stroke:rgb(255,0,0);stroke-width:0.05"/>
+<line x1="6" y1="0" x2="6" y2="6" style="stroke:rgb(255,0,0);stroke-width:0.05"/>
+
+<line x1="0" y1="0" x2="6" y2="0" style="stroke:rgb(255,0,0);stroke-width:0.05"/>
+<line x1="0" y1="1" x2="6" y2="1" style="stroke:rgb(255,0,0);stroke-width:0.05"/>
+<line x1="0" y1="2" x2="6" y2="2" style="stroke:rgb(255,0,0);stroke-width:0.05"/>
+<line x1="0" y1="3" x2="6" y2="3" style="stroke:rgb(255,0,0);stroke-width:0.05"/>
+<line x1="0" y1="4" x2="6" y2="4" style="stroke:rgb(255,0,0);stroke-width:0.05"/>
+<line x1="0" y1="5" x2="6" y2="5" style="stroke:rgb(255,0,0);stroke-width:0.05"/>
+<line x1="0" y1="6" x2="6" y2="6" style="stroke:rgb(255,0,0);stroke-width:0.05"/>
+</g>
+<image xlink:href="arrow.png" id="poi" x="100" y="100" width="44" height="44"  visibility="display"/>
+</svg>

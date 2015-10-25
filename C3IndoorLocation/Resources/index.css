@@ -1,0 +1,39 @@
+body {
+	background-color: white;
+	font-family: Arial;
+	font-size: 24px;
+}
+
+#myMaps {
+/*    margin:auto auto;*/
+    height: 5390px;
+    width: 7000px;
+	
+}
+
+.debugPath {
+	stroke: black;
+	stroke-width: 5;
+}
+
+.debugRoom {
+	fill: red;
+	stroke: red;
+	stroke-width: 4;
+}
+
+.wayfindingRoom {
+	fill: #ffc;
+	stroke: blue;
+	stroke-width: 2;
+	stroke-dasharray: 5 3;
+}
+
+g.startPin path {
+	fill: red;
+}
+
+g.destinationPin path {
+	fill: blue
+	/*fill: green;*/
+}

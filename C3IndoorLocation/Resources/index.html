@@ -1,0 +1,283 @@
+<html>
+<head>
+<meta charset="utf-8" />
+<meta content="width=device-width,initial-scale=.3,minimum-scale=.1,maximum-scale=3" name="viewport">
+<link rel="stylesheet" href="index.css">
+<script src="jquery.js" type="text/javascript"></script>
+<script src="jquery.wayfinding.js" type="text/javascript"></script>
+<script src="snap.svg-min.js" type="text/javascript"></script>
+<script src="list.js" type="text/javascript"></script>
+</head>
+<body>
+<script type="text/javascript">
+  var inter=0;
+  var beaconNo;
+  var beaconList;
+  var  SEIEEmap;
+  var circle;
+  var startPoint;
+  var endPoint;
+  var positionCurrent = {
+    lat: null,
+    lng: null,
+    hng: null
+  };
+
+  var lasthng = 0;
+  var rotateangle=0;
+  var X=0;
+  var Y=0;
+  var i = 0;
+
+  if (window.DeviceOrientationEvent) {
+    window.addEventListener("deviceorientation", onHeadingChange);
+  }
+
+  function getBrowserOrientation() {
+    var orientation;
+    if (screen.orientation && screen.orientation.type) {
+      orientation = screen.orientation.type;
+    } else {
+      orientation = screen.orientation || screen.mozOrientation || screen.msOrientation;
+    }
+    return orientation;
+  }
+
+  function onHeadingChange(event) {
+    var heading = event.alpha;
+
+
+    if (typeof event.webkitCompassHeading !== "undefined") {
+      heading = event.webkitCompassHeading; 
+    };
+
+    positionCurrent.hng = heading;
+
+    if (typeof myMaps.style.webkitTransform !== "undefined") {
+      if (positionCurrent.hng <= 15 || positionCurrent.hng > 345) {
+        lasthng = 0;
+      } else if (positionCurrent.hng <= 45 && positionCurrent.hng > 15) {
+        lasthng = 30;
+      } else if (positionCurrent.hng <= 75 && positionCurrent.hng > 45) {
+        lasthng = 60;
+      } else if (positionCurrent.hng <= 105 && positionCurrent.hng > 75) {
+        lasthng = 90;
+      } else if (positionCurrent.hng <= 135 && positionCurrent.hng > 105) {
+        lasthng = 120;
+      } else if (positionCurrent.hng <= 165 && positionCurrent.hng > 135) {
+        lasthng = 150;
+      } else if (positionCurrent.hng <= 195 && positionCurrent.hng > 165) {
+        lasthng = 180;
+      } else if (positionCurrent.hng <= 225 && positionCurrent.hng > 195) {
+        lasthng = 210;
+      } else if (positionCurrent.hng <= 255 && positionCurrent.hng > 225) {
+        lasthng = 240;
+      } else if (positionCurrent.hng <= 285 && positionCurrent.hng > 255) {
+        lasthng = 270;
+      } else if (positionCurrent.hng <= 315 && positionCurrent.hng > 285) {
+        lasthng = 300;
+      } else {
+        lasthng = 330;
+      }
+    };
+    rotateangle=lasthng;
+  }
+
+  function show(jsondata)
+  {
+    var jsonobjs = jsondata;
+    SEIEEmap = Snap.select("#myMaps");
+    inter++;
+    for (i = 0; i < beaconNo; i++) {
+
+      var hasdata = 0;
+      if (beaconList.get(i).rssiChain.length == 5) {
+        beaconList.get(i).rssiChain.shift();
+      }
+      for (var y = 0; y < jsonobjs.length; y++) {
+        if (beaconList.get(i).getminor() == jsonobjs[y].minor&&beaconList.get(i).getmajor() == jsonobjs[y].major) {
+          hasdata = 1;
+          break;
+        }
+      }
+      if (hasdata == 1) {
+        beaconList.get(i).rssiChain.push(jsonobjs[y].rssi);
+
+        beaconList.get(i).measuredPower = jsonobjs[y].measuredPower;
+      }
+      else {
+        beaconList.get(i).rssiChain.push(0);
+      }
+
+    }
+    if (inter == 1)
+    {
+      var tmpX = 0;
+      var tmpY = 0;
+      var tmpD = 0;
+      for (var k = 0; k < beaconNo; k++)
+      {
+        var ave = beaconList.get(k).getaveRssi();
+        if (beaconList.get(k).getdistance() != 0 && beaconList.get(k).geteffcount() >= 3) {
+          tmpX = tmpX + beaconList.get(k).getx() / (beaconList.get(k).getdistance() * beaconList.get(k).getdistance());
+          tmpY = tmpY + beaconList.get(k).gety() / (beaconList.get(k).getdistance() * beaconList.get(k).getdistance());
+          tmpD = tmpD + 1 / (beaconList.get(k).getdistance() * beaconList.get(k).getdistance());
+        }
+      }
+      console.log(tmpX);
+      if (tmpD != 0)
+      {
+        tmpX = tmpX / tmpD;
+        tmpY = tmpY / tmpD;
+        X = tmpX;
+        Y = tmpY;
+      }
+      rotateangle = rotateangle ;
+      circle.animate(
+      {
+       transform: "t" + X + "," + Y + "r" + rotateangle
+     }, 600);
+      inter = 0;
+    }
+  }
+        
+  function getData()
+  {
+    window.location.href = '/click/true';
+    setTimeout("getData()",1000);
+  }
+        
+        
+  function InitBeacon()
+  {
+    beaconList=new List();
+    SEIEEmap = Snap.select("#myMaps");
+    circle = SEIEEmap.select("#F1").select("#currentLocation");
+
+    $.getJSON("yunzi.json",function(data)
+    {
+      var beacondata = eval(data);
+      beaconNo=beacondata.length;
+      for(var i=0; i<beacondata.length; i++)
+      {
+        var beacon = new Object();
+
+        beacon.X=beacondata[i].x;
+        beacon.Y=beacondata[i].y;
+        beacon.major=beacondata[i].major;
+        beacon.minor=beacondata[i].minor;
+        beacon.aveRssi=0;
+        beacon.distance=0;
+        beacon.measuredPower=-59;
+        beacon.rssiChain=new Array();
+        beacon.getmeasuredPower=function()
+        {
+          return this.measuredPower;
+        };
+        beacon.setmeasuredPower=function(v)
+        {
+          this.measuredPower=v;
+        };
+        beacon.getminor=function()
+        {
+          return this.minor;
+        };
+        beacon.getmajor=function()
+        {
+          return this.major;
+        };
+        beacon.getx=function()
+        {
+          return this.X;
+        };
+        beacon.gety=function()
+        {
+          return this.Y;
+        };
+        beacon.geteffcount=function()
+        {
+          var effcount = 0;
+          for (var j = 0; j < this.rssiChain.length; j++)
+          {
+
+            if (this.rssiChain[j] != 0)
+            {
+              effcount++;
+            }
+          }
+          return effcount;
+        };
+        beacon.getaveRssi=function()
+        {
+          var num=0;
+          var effcount=0;
+          for(var i=0;i<this.rssiChain.length;i++)
+          {
+            if(this.rssiChain[i]!=0)
+            {
+              num=num+this.rssiChain[i];
+              effcount++;
+            }
+          }
+          if(effcount!=0)
+          {
+            this.aveRssi=num/effcount;
+          }
+          else
+          {
+            this.aveRssi=0;
+          }
+          return this.aveRssi;
+        };
+
+        beacon.getdistance=function()
+        {
+          var ratio = this.aveRssi / this.measuredPower;
+          var Correction = 0.96 + Math.pow(Math.abs(this.aveRssi), 3.0) % 10.0 / 150.0;
+          if (ratio < 1)
+          {
+            this.distance = Math.pow(ratio, 9.98) * Correction;
+          }
+          else
+          {
+            this.distance = 0.103 + 0.89978 * Math.pow(ratio, 9) * Correction;
+          }
+          return this.distance;
+        };
+        beaconList.add(beacon);
+      }
+      getData();
+    });
+  }
+
+  $(document).ready(function () {
+    'use strict';
+
+    $('#myMaps').wayfinding({
+      'maps': [
+      {'path': 'SEIEE.svg', 'id': 'F1'}
+      ],
+      'path': {
+        width: 3,
+        color: '#FFFF00',
+        radius: 8,
+        speed: 2
+      },
+      'defaultMap': 'F1',
+      'showLocation': true
+    }, function(){
+      InitBeacon();
+    });
+
+
+    $('#myMaps').on('wayfinding:roomClicked', function(e, r) {
+      // $('#Paths line').attr('stroke-opacity', 1);
+      $('#myMaps').wayfinding('startpoint', 'R215');
+      $('#myMaps').wayfinding('routeTo', 'R208');
+    });
+  });
+</script>
+  <div id="myMaps">
+  </div>
+</body>
+</html>
