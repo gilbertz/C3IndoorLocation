@@ -31,6 +31,12 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>This is required for monitoring.</string>
+    <key>NSLocationUsageDescription</key>
+    <string>This is required for monitoring and ranging.</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>This is required for ranging.</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

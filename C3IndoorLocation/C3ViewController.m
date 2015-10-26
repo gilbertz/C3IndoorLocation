@@ -14,9 +14,9 @@
 //weixin
 //static NSString * const kUUID = @"FDA50693-A4E2-4FB1-AFCF-C6EB07647825";
 //yunzi
-//static NSString * const kUUID = @"23A01AF0-232A-4518-9C0E-323FB773F5EF";
+static NSString * const kUUID = @"23A01AF0-232A-4518-9C0E-323FB773F5EF";
 //estimote
-static NSString * const kUUID = @"B9407F30-F5F8-466E-AFF9-25556B57FE6D";
+//static NSString * const kUUID = @"B9407F30-F5F8-466E-AFF9-25556B57FE6D";
 //bright
 //static NSString * const kUUID = @"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0";
 //april
@@ -147,10 +147,12 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
         self.arrowView.destination =
         [[CLLocation alloc] initWithLatitude:31.02608
                                    longitude:121.43825];
+        NSString *jsonDataString = [NSString stringWithFormat:@"button(%@)", @"R208"];
+        [self.myWebView stringByEvaluatingJavaScriptFromString:jsonDataString];
     }
     
     self.locationLabel.text = sender.titleLabel.text;
-    self.distanceLabel.text = [self.arrowView.locationManager distanceToLocation:self.arrowView.destination];
+//    self.distanceLabel.text = [self.arrowView.locationManager distanceToLocation:self.arrowView.destination];
     
     if (!self.arrowView.isPointing) {
         [self.arrowView startPointing];
@@ -171,38 +173,45 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
 
 #pragma mark UIWebViewDelegate
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-    if ( [request.mainDocumentURL.relativePath isEqualToString:@"/click/false"] ) {
-        NSLog( @"not clicked" );
-        return false;
-    }
+//    if ( [request.mainDocumentURL.relativePath isEqualToString:@"/click/false"] ) {
+//        NSLog( @"not clicked" );
+//        return false;
+//    }
     
-    if ( [request.mainDocumentURL.relativePath isEqualToString:@"/generateNavigation"] ) {
-        NSLog( @"not clicked" );
-        return false;
-    }
-    
-    NSString *requestString = [[request URL]absoluteString];//获取请求的绝对路径.
+//    if ( [request.mainDocumentURL.relativePath isEqualToString:@"/generateNavigation"] ) {
+//        NSLog( @"not clicked" );
+//        return false;
+//    }
+    //获取请求的绝对路径.
+    NSString *requestString = [[request URL]absoluteString];
     //提交请求时候分割参数的分隔符
+    NSLog(requestString);
     NSArray *components = [requestString componentsSeparatedByString:@":"];
     NSString *direction = @"";
     NSString *distance = @"";
-    if ([components count] >1 && [(NSString *)[components objectAtIndex:0]isEqualToString:@"generateNavigation"]) {
+    NSString *totalDistance = @"";
+
+    BOOL equal = [(NSString *)[components objectAtIndex:0]isEqualToString:@"generate"];
+    if (equal) {
         //过滤请求是否是我们需要的.不需要的请求不进入条件
-            if([(NSString *)[components objectAtIndex:0]isEqualToString:@"right"])
+            if([(NSString *)[components objectAtIndex:1]isEqualToString:@"right"])
             {
                 direction = @"右转";
-            }else if([(NSString *)[components objectAtIndex:0]isEqualToString:@"left"]){
+            }else if([(NSString *)[components objectAtIndex:1]isEqualToString:@"left"]){
                 direction = @"左转";
-            }else if([(NSString *)[components objectAtIndex:0]isEqualToString:@"straight"]){
+            }else if([(NSString *)[components objectAtIndex:1]isEqualToString:@"straight"]){
                 direction = @"直行";
             }
-        distance = [components objectAtIndex:1];
-    }
-    self.navigationLabel.text = [distance stringByAppendingString:direction];
+        distance = [components objectAtIndex:2];
+        distance = [NSString stringWithFormat:@"%ld", [distance integerValue]/20 ];
+        distance = [distance stringByAppendingString:@" meters "];
+        self.navigationLabel.text = [distance stringByAppendingString:direction];
+        totalDistance = [components objectAtIndex:3];
+        totalDistance = [NSString stringWithFormat:@"%ld", [totalDistance integerValue]/20 ];
+        totalDistance = [totalDistance stringByAppendingString:@" meters "];
+        self.distanceLabel.text = totalDistance;
 
-    
-    if ( [request.mainDocumentURL.relativePath isEqualToString:@"/click/true"] ) {        //the image is clicked, variable click is true
-        NSLog( @"image clicked" );
+        
         
         //        [myWebView stringByEvaluatingJavaScriptFromString:@"show([{'minor':4215,'major':10004,'rssi':42,'measuredPower': 59},{'minor':4332,'major':10004,'rssi':49,'measuredPower': 59},{'minor':4180,'major':10004,'rssi':45,'measuredPower': 59},{'minor':4218,'major':10004,'rssi':43,'measuredPower': 59}])"];
         //        NSString *str = [self.detectedBeacons componentsJoinedByString:@","];
@@ -242,7 +251,16 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
         
         
         return false;
+
     }
+
+//    
+//    if ( [request.mainDocumentURL.relativePath isEqualToString:@"/click/true"] ) {        //the image is clicked, variable click is true
+//        NSLog( @"image clicked" );
+//        return false;
+//
+//
+//    }
     
     return true;
 }

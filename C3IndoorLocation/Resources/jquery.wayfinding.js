@@ -1315,6 +1315,8 @@
 			$('#Rooms *.wayfindingRoom', obj).removeAttr('class');
 
 			solution = [];
+			routeSolution = [];
+
 
 			//if startpoint != destination
 			if (startpoint !== destination) {
@@ -1325,6 +1327,8 @@
 				setEndPoint(options.endpoint, el);
 
 				solution = getShortestRoute();
+				routeSolution = getShortestRoute();
+
 
 				if (reversePathStart !== -1) {
 
@@ -1835,7 +1839,8 @@
 				case 'getDataStore':
 					//shows JSON version of dataStore when called from console.
 					//To facilitate caching dataStore.
-					result = JSON.stringify(dataStore);
+					// result = JSON.stringify(dataStore);
+					result = dataStore;
 					break;
 				case 'destroy':
 					//remove all traces of wayfinding from the obj

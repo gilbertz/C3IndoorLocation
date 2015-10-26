@@ -27,7 +27,10 @@
   var rotateangle=0;
   var routeSolution;
   var dataStore;
-  var thresholdValue = 1;
+  var thresholdValue = 5000;
+  var frontDirection="";
+  var frontDistance="";
+  var totalDistance=0;
 
   if (window.DeviceOrientationEvent) {
     window.addEventListener("deviceorientation", onHeadingChange);
@@ -84,6 +87,7 @@
   }
 
   function show(jsondata){
+    console.log(JSON.stringify(jsondata));
     var jsonobjs = jsondata;
     SEIEEmap = Snap.select("#myMaps");
     inter++;
@@ -120,8 +124,11 @@
       var tmpD = 0;
       //对于beaconList中的每个beacon对象做检查，生成KNN数组，其中为aveRssi最大的两个元素
       var kNN_beaconArray = new Array();
-      for (var k = 0; k <beaconNo; K++){
+      for (var k = 0; k <beaconNo; k++){
+        //求取rssi平均值
+        var ave = beaconList.get(k).getaveRssi();
           if (beaconList.get(k).getdistance() != 0 && beaconList.get(k).geteffcount() >= 3){
+              console.log("kk");
               if (kNN_beaconArray.length > 1) {
                 if (beaconList.get(k).getaveRssi > kNN_beaconArray[0].getaveRssi) {
                   kNN_beaconArray.unshift(beaconList.get(k));
@@ -143,6 +150,7 @@
               };
             };
       };
+      console.log("kNN_beaconArray:"+kNN_beaconArray);
 
       //求取数组中两个beacon对象与目标的距离
       for (var i = 0; i < kNN_beaconArray.length; i++) {
@@ -165,40 +173,61 @@
       //装载方向角
       rotateangle = rotateangle ;
       //获取点在哪个路径上
+      if (dataStore != null && routeSolution != null) {
+        console.log("huoqu");
+
       var routeSolutionIndex;
       var x;
       var y;
       var m;
       var n;
+      var l;
+      var temTotalDistance = 0;
       for (var i = 0; i < routeSolution.length; i ++){
-        x = dataStore.p[routeSolution[i].floor][routeSolution[i].segment].x;
-        y = dataStore.p[routeSolution[i].floor][routeSolution[i].segment].y;
-        m = dataStore.p[routeSolution[i].floor][routeSolution[i].segment].m;
-        n = dataStore.p[routeSolution[i].floor][routeSolution[i].segment].n;
-        if ((m-x)*(Y-y)-(n-y)*(X-x) < thresholdValue) {
+
+        x = dataStore.p[routeSolution[0].floor][routeSolution[i].segment].x;
+        y = dataStore.p[routeSolution[0].floor][routeSolution[i].segment].y;
+        m = dataStore.p[routeSolution[0].floor][routeSolution[i].segment].m;
+        n = dataStore.p[routeSolution[0].floor][routeSolution[i].segment].n;
+
+        var compare = (m-x)*(kNN_beaconArray[0].gety()-y)-(n-y)*(kNN_beaconArray[0].getx()-x);
+        compare = Math.abs(compare);
+        console.log(compare);
+        if (compare < thresholdValue) {
          routeSolutionIndex = i;
+         console.log("routeindex:"+i);
          break;
        };
+       };
+      for (var i = 0; i < routeSolution.length; i ++){
+        l = dataStore.p[routeSolution[0].floor][routeSolution[i].segment].l;
+        temTotalDistance = temTotalDistance +l;
       };
-      var frontDirection;
-      var frontDistance;
-      var p = dataStore.p[routeSolution[routeSolutionIndex+1].floor][routeSolution[routeSolutionIndex+1].segment].m;
-      var q = dataStore.p[routeSolution[routeSolutionIndex+1].floor][routeSolution[routeSolutionIndex+1].segment].n;
-       //两个向量的叉乘
-      if((m-x)*(q-n)-(n-y)*(p-m) > 0){
-        //左转
-        frontDirection = "left";
-      }else if ((m-x)*(q-n)-(n-y)*(p-m) < 0){
-        //右转
-        frontDirection = "right";
-      }else if((m-x)*(q-n)-(n-y)*(p-m) = 0){
-        //直行
+       totalDistance = temTotalDistance;
+       if ((routeSolutionIndex-1) < routeSolution.length) {
+        var p = dataStore.p[routeSolution[0].floor][routeSolution[routeSolutionIndex+1].segment].m;
+        var q = dataStore.p[routeSolution[0].floor][routeSolution[routeSolutionIndex+1].segment].n;
+             //两个向量的叉乘
+             if((m-x)*(q-n)-(n-y)*(p-m) < 0){
+             //左转
+             frontDirection = "left";
+             }else if ((m-x)*(q-n)-(n-y)*(p-m) > 0){
+             //右转
+             frontDirection = "right";
+             }else if((m-x)*(q-n)-(n-y)*(p-m) == 0){
+             //直行
+             frontDirection = "straight";
+             };
+       }else{
         frontDirection = "straight";
-      };
+
+       }
+
+
       //距离前方多少米
       frontDistance = Math.sqrt(Math.pow(X-m, 2) + Math.pow(Y-n, 2));
 
-      window.location.href = '/generateNavigation';
+      };
 
       circle.animate(
       {
@@ -210,8 +239,21 @@
         
   function getData()
   {
-    window.location.href = '/click/true';
-    setTimeout("getData()",1000);
+    // window.location.href = '/click/true';
+    var url = "generate:"+frontDirection+":"+frontDistance+":"+totalDistance;
+    document.location = url;
+    setTimeout("getData()",2000);
+  }
+
+  function button(data){
+    $('#myMaps').wayfinding('startpoint', 'R215');
+      $('#myMaps').wayfinding('routeTo', 'R208');
+      //拿到最短的路径数组
+      console.log("rom");
+      routeSolution = $('#myMaps').wayfinding('routeSolution');
+      console.log(routeSolution);
+      dataStore = $('#myMaps').wayfinding('getDataStore');
+      console.log(dataStore);
   }
         
         
@@ -343,8 +385,11 @@
       $('#myMaps').wayfinding('startpoint', 'R215');
       $('#myMaps').wayfinding('routeTo', 'R208');
       //拿到最短的路径数组
+      console.log("rom");
       routeSolution = $('#myMaps').wayfinding('routeSolution');
+      console.log(routeSolution);
       dataStore = $('#myMaps').wayfinding('getDataStore');
+      console.log(dataStore);
     });
   });
 </script>
