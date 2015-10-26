@@ -25,9 +25,9 @@
 
   var lasthng = 0;
   var rotateangle=0;
-  var X=0;
-  var Y=0;
-  var i = 0;
+  var routeSolution;
+  var dataStore;
+  var thresholdValue = 1;
 
   if (window.DeviceOrientationEvent) {
     window.addEventListener("deviceorientation", onHeadingChange);
@@ -83,12 +83,13 @@
     rotateangle=lasthng;
   }
 
-  function show(jsondata)
-  {
+  function show(jsondata){
     var jsonobjs = jsondata;
     SEIEEmap = Snap.select("#myMaps");
     inter++;
-    for (i = 0; i < beaconNo; i++) {
+
+    //像ibeaconList地图的每个ibeacon对象存入信号强度数组，数组元素最多为5个，数组作为一个链表，是动态更新的，保持最大为5个，没人检测到的ibeaconList中的ibeacon对象存入信号强度0
+    for (var i = 0; i < beaconNo; i++) {
 
       var hasdata = 0;
       if (beaconList.get(i).rssiChain.length == 5) {
@@ -109,21 +110,50 @@
         beaconList.get(i).rssiChain.push(0);
       }
 
-    }
+    };
+
+    //求对beaconList的每个ibeacon求相对自己的距离，根据反距离加权算法得到自己的X和Y值
     if (inter == 1)
     {
       var tmpX = 0;
       var tmpY = 0;
       var tmpD = 0;
-      for (var k = 0; k < beaconNo; k++)
-      {
-        var ave = beaconList.get(k).getaveRssi();
-        if (beaconList.get(k).getdistance() != 0 && beaconList.get(k).geteffcount() >= 3) {
-          tmpX = tmpX + beaconList.get(k).getx() / (beaconList.get(k).getdistance() * beaconList.get(k).getdistance());
-          tmpY = tmpY + beaconList.get(k).gety() / (beaconList.get(k).getdistance() * beaconList.get(k).getdistance());
-          tmpD = tmpD + 1 / (beaconList.get(k).getdistance() * beaconList.get(k).getdistance());
-        }
-      }
+      //对于beaconList中的每个beacon对象做检查，生成KNN数组，其中为aveRssi最大的两个元素
+      var kNN_beaconArray = new Array();
+      for (var k = 0; k <beaconNo; K++){
+          if (beaconList.get(k).getdistance() != 0 && beaconList.get(k).geteffcount() >= 3){
+              if (kNN_beaconArray.length > 1) {
+                if (beaconList.get(k).getaveRssi > kNN_beaconArray[0].getaveRssi) {
+                  kNN_beaconArray.unshift(beaconList.get(k));
+                  kNN_beaconArray.pop();
+                };
+
+              }else if (kNN_beaconArray.length == 1){
+                if (beaconList.get(k).getaveRssi > kNN_beaconArray[0].getaveRssi) {
+                  kNN_beaconArray.unshift(beaconList.get(k));
+
+                }else{
+                  kNN_beaconArray.push(beaconList.get(k));
+
+                };
+              
+              }else if (kNN_beaconArray.length == 0){
+                kNN_beaconArray.push(beaconList.get(k));
+
+              };
+            };
+      };
+
+      //求取数组中两个beacon对象与目标的距离
+      for (var i = 0; i < kNN_beaconArray.length; i++) {
+          tmpX = tmpX + kNN_beaconArray[i].getx() / (kNN_beaconArray[i].getdistance() * kNN_beaconArray[i].getdistance());
+          tmpY = tmpY + kNN_beaconArray[i].gety() / (kNN_beaconArray[i].getdistance() * kNN_beaconArray[i].getdistance());
+          tmpD = tmpD + 1 / (kNN_beaconArray[i].getdistance() * kNN_beaconArray[i].getdistance());
+      };
+
+      //装载X Y
+      var X = 0;
+      var Y = 0;
       console.log(tmpX);
       if (tmpD != 0)
       {
@@ -132,14 +162,51 @@
         X = tmpX;
         Y = tmpY;
       }
+      //装载方向角
       rotateangle = rotateangle ;
+      //获取点在哪个路径上
+      var routeSolutionIndex;
+      var x;
+      var y;
+      var m;
+      var n;
+      for (var i = 0; i < routeSolution.length; i ++){
+        x = dataStore.p[routeSolution[i].floor][routeSolution[i].segment].x;
+        y = dataStore.p[routeSolution[i].floor][routeSolution[i].segment].y;
+        m = dataStore.p[routeSolution[i].floor][routeSolution[i].segment].m;
+        n = dataStore.p[routeSolution[i].floor][routeSolution[i].segment].n;
+        if ((m-x)*(Y-y)-(n-y)*(X-x) < thresholdValue) {
+         routeSolutionIndex = i;
+         break;
+       };
+      };
+      var frontDirection;
+      var frontDistance;
+      var p = dataStore.p[routeSolution[routeSolutionIndex+1].floor][routeSolution[routeSolutionIndex+1].segment].m;
+      var q = dataStore.p[routeSolution[routeSolutionIndex+1].floor][routeSolution[routeSolutionIndex+1].segment].n;
+       //两个向量的叉乘
+      if((m-x)*(q-n)-(n-y)*(p-m) > 0){
+        //左转
+        frontDirection = "left";
+      }else if ((m-x)*(q-n)-(n-y)*(p-m) < 0){
+        //右转
+        frontDirection = "right";
+      }else if((m-x)*(q-n)-(n-y)*(p-m) = 0){
+        //直行
+        frontDirection = "straight";
+      };
+      //距离前方多少米
+      frontDistance = Math.sqrt(Math.pow(X-m, 2) + Math.pow(Y-n, 2));
+
+      window.location.href = '/generateNavigation';
+
       circle.animate(
       {
        transform: "t" + X + "," + Y + "r" + rotateangle
      }, 600);
       inter = 0;
     }
-  }
+  };
         
   function getData()
   {
@@ -157,8 +224,9 @@
     $.getJSON("yunzi.json",function(data)
     {
       var beacondata = eval(data);
+      //json中所有ibeacon的数量
       beaconNo=beacondata.length;
-      for(var i=0; i<beacondata.length; i++)
+      for(var i=0; i<beaconNo; i++)
       {
         var beacon = new Object();
 
@@ -274,6 +342,9 @@
       // $('#Paths line').attr('stroke-opacity', 1);
       $('#myMaps').wayfinding('startpoint', 'R215');
       $('#myMaps').wayfinding('routeTo', 'R208');
+      //拿到最短的路径数组
+      routeSolution = $('#myMaps').wayfinding('routeSolution');
+      dataStore = $('#myMaps').wayfinding('getDataStore');
     });
   });
 </script>

@@ -115,6 +115,7 @@
 		'floorChangeAnimationDelay': 1250
 	},
 	dataStore;
+	var routeSolution;
 
 	// should array of arrays be looked into
 	// should floor only be stored by id?
@@ -1768,6 +1769,10 @@
 						options.accessibleRoute = passed;
 						establishDataStore(callback);
 					}
+					break;
+
+				case 'routeSolution':
+					result = routeSolution;
 					break;
 
 				/**

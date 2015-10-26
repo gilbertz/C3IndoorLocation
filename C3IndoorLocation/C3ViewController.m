@@ -38,6 +38,8 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
 @interface C3ViewController ()<C3ArrowViewDelegate,UIWebViewDelegate,CLLocationManagerDelegate, CBPeripheralManagerDelegate>
 
 @property (strong, nonatomic) C3ArrowView *arrowView;
+@property (weak, nonatomic) IBOutlet UILabel *navigationLabel;
+@property (weak, nonatomic) IBOutlet UILabel *navigationTitleLabel;
 @property (strong, nonatomic) UIImagePickerController *picker;
 @property (weak, nonatomic) IBOutlet UIView *controlsView;
 @property (weak, nonatomic) IBOutlet UILabel *distanceLabel;
@@ -99,6 +101,8 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
     [overlayView addSubview:self.locationLabel];
     [overlayView addSubview:self.locationTitleLabel];
     [overlayView addSubview:self.distanceTitleLabel];
+    [overlayView addSubview:self.navigationLabel];
+    [overlayView addSubview:self.navigationTitleLabel];
     
     self.picker.cameraOverlayView = overlayView;
 }
@@ -139,6 +143,10 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
         self.arrowView.destination =
         [[CLLocation alloc] initWithLatitude:36.1504781
                                    longitude:-86.8008202];
+    }else if ([sender.titleLabel.text isEqualToString:@"R208"]) {
+        self.arrowView.destination =
+        [[CLLocation alloc] initWithLatitude:31.02608
+                                   longitude:121.43825];
     }
     
     self.locationLabel.text = sender.titleLabel.text;
@@ -167,6 +175,31 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
         NSLog( @"not clicked" );
         return false;
     }
+    
+    if ( [request.mainDocumentURL.relativePath isEqualToString:@"/generateNavigation"] ) {
+        NSLog( @"not clicked" );
+        return false;
+    }
+    
+    NSString *requestString = [[request URL]absoluteString];//获取请求的绝对路径.
+    //提交请求时候分割参数的分隔符
+    NSArray *components = [requestString componentsSeparatedByString:@":"];
+    NSString *direction = @"";
+    NSString *distance = @"";
+    if ([components count] >1 && [(NSString *)[components objectAtIndex:0]isEqualToString:@"generateNavigation"]) {
+        //过滤请求是否是我们需要的.不需要的请求不进入条件
+            if([(NSString *)[components objectAtIndex:0]isEqualToString:@"right"])
+            {
+                direction = @"右转";
+            }else if([(NSString *)[components objectAtIndex:0]isEqualToString:@"left"]){
+                direction = @"左转";
+            }else if([(NSString *)[components objectAtIndex:0]isEqualToString:@"straight"]){
+                direction = @"直行";
+            }
+        distance = [components objectAtIndex:1];
+    }
+    self.navigationLabel.text = [distance stringByAppendingString:direction];
+
     
     if ( [request.mainDocumentURL.relativePath isEqualToString:@"/click/true"] ) {        //the image is clicked, variable click is true
         NSLog( @"image clicked" );
