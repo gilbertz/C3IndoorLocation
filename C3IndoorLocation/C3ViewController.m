@@ -153,7 +153,7 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
 - (void)locationManager:(CLLocationManager *)manager
      didUpdateLocations:(NSArray *)locations
 {
-    self.distanceLabel.text = [manager distanceToLocation:self.arrowView.destination];
+//    self.distanceLabel.text = [manager distanceToLocation:self.arrowView.destination];
 }
 
 #pragma mark UIWebViewDelegate
@@ -162,15 +162,16 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
     //获取请求的绝对路径.
     NSString *requestString = [[request URL]absoluteString];
     //提交请求时候分割参数的分隔符
-
+    NSLog(@"request: %@",requestString);
     NSArray *components = [requestString componentsSeparatedByString:@":"];
     NSString *direction = @"";
     NSString *distance = @"";
     NSString *totalDistance = @"";
-
+    NSString *location = @"";
+    
     //判断是否是产生距离信息的url
-    BOOL equal = [(NSString *)[components objectAtIndex:0]isEqualToString:@"generate"];
-    if (equal) {
+    BOOL isGenerate = [(NSString *)[components objectAtIndex:0]isEqualToString:@"generate"];
+    if (isGenerate) {
             //过滤请求是否是我们需要的.不需要的请求不进入条件
             if([(NSString *)[components objectAtIndex:1]isEqualToString:@"right"])
             {
@@ -180,15 +181,33 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
             }else if([(NSString *)[components objectAtIndex:1]isEqualToString:@"straight"]){
                 direction = @"直行";
             }
-        distance = [components objectAtIndex:2];
-        distance = [NSString stringWithFormat:@"%ld", [distance integerValue]/ARCHITECTSCALE ];
-        distance = [distance stringByAppendingString:@" meters "];
-        self.navigationLabel.text = [distance stringByAppendingString:direction];
-        totalDistance = [components objectAtIndex:3];
-        totalDistance = [NSString stringWithFormat:@"%ld", [totalDistance integerValue]/ARCHITECTSCALE ];
-        totalDistance = [totalDistance stringByAppendingString:@" meters "];
-        self.distanceLabel.text = totalDistance;
         
+        distance = [components objectAtIndex:2];
+        totalDistance = [components objectAtIndex:3];
+        location = [components objectAtIndex:4];
+        
+        if ([distance isEqualToString:@""]) {
+            self.navigationLabel.text = @"未知";
+        }else{
+            distance = [NSString stringWithFormat:@"%ld", [distance integerValue]/ARCHITECTSCALE ];
+            distance = [distance stringByAppendingString:@" meters "];
+            self.navigationLabel.text = [distance stringByAppendingString:direction];
+        };
+        
+        if ([totalDistance isEqualToString:@"0"]) {
+            self.distanceLabel.text = @"未知";
+        }else{
+            totalDistance = [NSString stringWithFormat:@"%ld", [totalDistance integerValue]/ARCHITECTSCALE ];
+            totalDistance = [totalDistance stringByAppendingString:@" meters "];
+            self.distanceLabel.text = totalDistance;
+        };
+        
+        if ([location isEqualToString:@""]) {
+            self.locationLabel.text = @"未知";
+        }else{
+            self.locationLabel.text = [components objectAtIndex:4];
+        };
+
         //检测到的beacon数组
         NSMutableArray *dictArr = [NSMutableArray array];
         for (int i = 0; i < self.detectedBeacons.count; i++) {

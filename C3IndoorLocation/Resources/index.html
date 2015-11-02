@@ -31,6 +31,7 @@
   var frontDirection="";
   var frontDistance="";
   var totalDistance=0;
+  var endRoute = "";
 
   if (window.DeviceOrientationEvent) {
     window.addEventListener("deviceorientation", onHeadingChange);
@@ -239,7 +240,7 @@
   function getData()
   {
     // window.location.href = '/click/true';
-    var url = "generate:"+frontDirection+":"+frontDistance+":"+totalDistance;
+    var url = "generate:"+frontDirection+":"+frontDistance+":"+totalDistance+":"+ endRoute;
     document.location = url;
     setTimeout("getData()",1000);
   }
@@ -382,7 +383,8 @@
     $('#myMaps').on('wayfinding:roomClicked', function(e, r) {
       // $('#Paths line').attr('stroke-opacity', 1);
       $('#myMaps').wayfinding('startpoint', 'R215');
-      $('#myMaps').wayfinding('routeTo', 'R208');
+      $('#myMaps').wayfinding('routeTo', r.roomId);
+      endRoute = r.roomId;
       //拿到最短的路径数组
       console.log("rom");
       routeSolution = $('#myMaps').wayfinding('routeSolution');
