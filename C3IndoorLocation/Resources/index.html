@@ -87,7 +87,7 @@
   }
 
   function show(jsondata){
-    // console.log(JSON.stringify(jsondata));
+    console.log(JSON.stringify(jsondata));
     var jsonobjs = jsondata;
     SEIEEmap = Snap.select("#myMaps");
     inter++;
@@ -262,7 +262,7 @@
     SEIEEmap = Snap.select("#myMaps");
     circle = SEIEEmap.select("#F1").select("#currentLocation");
 
-    $.getJSON("yunzi.json",function(data)
+    $.getJSON("estimote.json",function(data)
     {
       var beacondata = eval(data);
       //json中所有ibeacon的数量

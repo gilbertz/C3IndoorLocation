@@ -14,13 +14,15 @@
 //weixin
 //static NSString * const kUUID = @"FDA50693-A4E2-4FB1-AFCF-C6EB07647825";
 //yunzi
-static NSString * const kUUID = @"23A01AF0-232A-4518-9C0E-323FB773F5EF";
+//static NSString * const kUUID = @"23A01AF0-232A-4518-9C0E-323FB773F5EF";
 //estimote
-//static NSString * const kUUID = @"B9407F30-F5F8-466E-AFF9-25556B57FE6D";
+static NSString * const kUUID = @"B9407F30-F5F8-466E-AFF9-25556B57FE6D";
 //bright
 //static NSString * const kUUID = @"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0";
 //april
 //static NSString * const kUUID = @"B5B182C7-EAB1-4988-AA99-B5C1517008D9";
+
+#define  ARCHITECTSCALE 20
 
 static NSString * const kIdentifier = @"SomeIdentifier";
 static void * const kMonitoringOperationContext = (void *)&kMonitoringOperationContext;
@@ -69,43 +71,46 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    //开始搜寻beacon
     [self startRangingForBeacons];
-    self.myWebView.delegate=self;
-    self.myWebView.scalesPageToFit = YES;
     
-    NSString *localHTMLPageFilePath = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html"];
-    NSURL *localHTMLPageFileURL = [NSURL fileURLWithPath:localHTMLPageFilePath];
-    [self.myWebView loadRequest:[NSURLRequest requestWithURL:localHTMLPageFileURL]];
-    
+    //打开摄像头背景
     self.picker = [[UIImagePickerController alloc] init];
     self.picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     self.picker.showsCameraControls = NO;
     self.picker.navigationBarHidden = YES;
     self.picker.toolbarHidden = YES;
-    //    self.picker.cameraViewTransform =
-    //    CGAffineTransformScale(self.picker.cameraViewTransform,
-    //                           1.0,
-    //                           (self.view.frame.size.height -
-    //                            self.controlsView.frame.size.height) /
-    //                           self.view.frame.size.width);
     
-    UIView *overlayView =
-    [[UIView alloc] initWithFrame:self.view.frame];
+    //叠加摄像头上的overlay
+    UIView *overlayView = [[UIView alloc] initWithFrame:self.view.frame];
     
+    //overlay的背景透明
     overlayView.opaque = NO;
     overlayView.backgroundColor = [UIColor clearColor];
     
-    [self setupArrowViewInView:overlayView];
+    //功能面板透明度
     self.controlsView.alpha = 0.9;
+    //overlay上添加右侧的功能面板
     [overlayView addSubview:self.controlsView];
+    //overlay上添加箭头
+    [self setupArrowViewInView:overlayView];
+    //overlay上添加目的地、距离、导航信息
     [overlayView addSubview:self.distanceLabel];
     [overlayView addSubview:self.locationLabel];
     [overlayView addSubview:self.locationTitleLabel];
     [overlayView addSubview:self.distanceTitleLabel];
     [overlayView addSubview:self.navigationLabel];
     [overlayView addSubview:self.navigationTitleLabel];
-    
+    //overlay置为camera视图的view
     self.picker.cameraOverlayView = overlayView;
+
+    //controlsView上的mywebview
+    NSString *localHTMLPageFilePath = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html"];
+    NSURL *localHTMLPageFileURL = [NSURL fileURLWithPath:localHTMLPageFilePath];
+    [self.myWebView loadRequest:[NSURLRequest requestWithURL:localHTMLPageFileURL]];
+    
+    self.myWebView.delegate=self;
+    self.myWebView.scalesPageToFit = YES;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -128,23 +133,7 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
 
 #pragma mark - Button actions
 - (IBAction)buttonPressed:(UIButton *)sender {
-    if ([sender.titleLabel.text isEqualToString:@"Featheringill Hall"]) {
-        self.arrowView.destination =
-        [[CLLocation alloc] initWithLatitude:36.1447809
-                                   longitude:-86.8032186];
-    } else if ([sender.titleLabel.text isEqualToString:@"Roma"]) {
-        self.arrowView.destination =
-        [[CLLocation alloc] initWithLatitude:36.1480013
-                                   longitude:-86.8083296];
-    } else if ([sender.titleLabel.text isEqualToString:@"Ben & Jerry's"]) {
-        self.arrowView.destination =
-        [[CLLocation alloc] initWithLatitude:36.146143
-                                   longitude:-86.7994725];
-    } else if ([sender.titleLabel.text isEqualToString:@"Qdoba"]) {
-        self.arrowView.destination =
-        [[CLLocation alloc] initWithLatitude:36.1504781
-                                   longitude:-86.8008202];
-    }else if ([sender.titleLabel.text isEqualToString:@"R208"]) {
+    if ([sender.titleLabel.text isEqualToString:@"R208"]) {
         self.arrowView.destination =
         [[CLLocation alloc] initWithLatitude:31.02608
                                    longitude:121.43825];
@@ -153,7 +142,6 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
     }
     
     self.locationLabel.text = sender.titleLabel.text;
-//    self.distanceLabel.text = [self.arrowView.locationManager distanceToLocation:self.arrowView.destination];
     
     if (!self.arrowView.isPointing) {
         [self.arrowView startPointing];
@@ -168,33 +156,22 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
     self.distanceLabel.text = [manager distanceToLocation:self.arrowView.destination];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-}
-
 #pragma mark UIWebViewDelegate
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-//    if ( [request.mainDocumentURL.relativePath isEqualToString:@"/click/false"] ) {
-//        NSLog( @"not clicked" );
-//        return false;
-//    }
     
-//    if ( [request.mainDocumentURL.relativePath isEqualToString:@"/generateNavigation"] ) {
-//        NSLog( @"not clicked" );
-//        return false;
-//    }
     //获取请求的绝对路径.
     NSString *requestString = [[request URL]absoluteString];
     //提交请求时候分割参数的分隔符
-    NSLog(requestString);
+
     NSArray *components = [requestString componentsSeparatedByString:@":"];
     NSString *direction = @"";
     NSString *distance = @"";
     NSString *totalDistance = @"";
 
+    //判断是否是产生距离信息的url
     BOOL equal = [(NSString *)[components objectAtIndex:0]isEqualToString:@"generate"];
     if (equal) {
-        //过滤请求是否是我们需要的.不需要的请求不进入条件
+            //过滤请求是否是我们需要的.不需要的请求不进入条件
             if([(NSString *)[components objectAtIndex:1]isEqualToString:@"right"])
             {
                 direction = @"右转";
@@ -204,65 +181,31 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
                 direction = @"直行";
             }
         distance = [components objectAtIndex:2];
-        distance = [NSString stringWithFormat:@"%ld", [distance integerValue]/20 ];
+        distance = [NSString stringWithFormat:@"%ld", [distance integerValue]/ARCHITECTSCALE ];
         distance = [distance stringByAppendingString:@" meters "];
         self.navigationLabel.text = [distance stringByAppendingString:direction];
         totalDistance = [components objectAtIndex:3];
-        totalDistance = [NSString stringWithFormat:@"%ld", [totalDistance integerValue]/20 ];
+        totalDistance = [NSString stringWithFormat:@"%ld", [totalDistance integerValue]/ARCHITECTSCALE ];
         totalDistance = [totalDistance stringByAppendingString:@" meters "];
         self.distanceLabel.text = totalDistance;
-
         
-        
-        //        [myWebView stringByEvaluatingJavaScriptFromString:@"show([{'minor':4215,'major':10004,'rssi':42,'measuredPower': 59},{'minor':4332,'major':10004,'rssi':49,'measuredPower': 59},{'minor':4180,'major':10004,'rssi':45,'measuredPower': 59},{'minor':4218,'major':10004,'rssi':43,'measuredPower': 59}])"];
-        //        NSString *str = [self.detectedBeacons componentsJoinedByString:@","];
-        //        NSLog(str);
-        //        NSLog(@"params:%@",self.detectedBeacons);
-        //        NSData *jsonData  =[self toJSONData : self.detectedBeacons];
-        //        NSString *jsonString = [[NSString alloc] initWithData:jsonData
-        //                                                     encoding:NSUTF8StringEncoding];
-        //        NSLog(jsonString);
-        //        NSError* error = nil;
-        //        NSString *result = [NSJSONSerialization dataWithJSONObject:self.detectedBeacons
-        //                                                    options:kNilOptions error:&error];
-        //        NSLog(result);
-        //                CLBeacon *beacon = self.detectedBeacons[0];
-        //                [self detailsStringForBeacon:beacon];
-        //        NSLog([self detailsStringForBeacon:beacon]);
-        
-        
-        NSMutableArray *dictArray = self.detectedBeacons;
+        //检测到的beacon数组
         NSMutableArray *dictArr = [NSMutableArray array];
-        for (int i = 0; i < dictArray.count; i++) {
+        for (int i = 0; i < self.detectedBeacons.count; i++) {
             CLBeacon *beacon = self.detectedBeacons[i];
-            //            NSUInteger anInteger = [beacon.rssi integerValue];
-            NSString *rssiString = [NSString stringWithFormat:@"%li", abs(beacon.rssi)];
+
+            NSString *rssiString = [NSString stringWithFormat:@"%ld", labs(beacon.rssi)];
             NSDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithFloat:[beacon.minor floatValue]],@"minor",[NSNumber numberWithFloat:[beacon.major floatValue]],@"major", [NSNumber numberWithInt:[rssiString intValue]] ,@"rssi",[NSNumber numberWithInt:59],@"measuredPower",nil];
             [dictArr addObject:dict];
         }
-        //                NSLog(@"params:%@",dictArr);
-        NSData *jsonData  =[self toJSONData : dictArr];
+        
+        NSData *jsonData  =[self toJSONData: dictArr];
         NSString *jsonString = [[NSString alloc] initWithData:jsonData
                                                      encoding:NSUTF8StringEncoding];
-        //                NSLog(jsonString);
         NSString *jsonDataString = [NSString stringWithFormat:@"show(%@)", jsonString];
-        //        NSLog(jsonDataString);
         [self.myWebView stringByEvaluatingJavaScriptFromString:jsonDataString];
-        //                [myWebView stringByEvaluatingJavaScriptFromString:@"show([{'minor':4215,'major':10004,'rssi':42,'measuredPower': 59},{'minor':4332,'major':10004,'rssi':49,'measuredPower': 59},{'minor':4180,'major':10004,'rssi':45,'measuredPower': 59},{'minor':4218,'major':10004,'rssi':43,'measuredPower': 59}])"];
-        
-        
         return false;
-
     }
-
-//    
-//    if ( [request.mainDocumentURL.relativePath isEqualToString:@"/click/true"] ) {        //the image is clicked, variable click is true
-//        NSLog( @"image clicked" );
-//        return false;
-//
-//
-//    }
-    
     return true;
 }
 
@@ -272,63 +215,12 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:theData
                                                        options:NSJSONWritingPrettyPrinted
                                                          error:&error];
-    
     if ([jsonData length] > 0 && error == nil){
         return jsonData;
     }else{
         return nil;
     }
 }
-
-
-
-- (NSArray *)filteredBeacons:(NSArray *)beacons
-{
-    // Filters duplicate beacons out; this may happen temporarily if the originating device changes its Bluetooth id
-    NSMutableArray *mutableBeacons = [beacons mutableCopy];
-    
-    NSMutableSet *lookup = [[NSMutableSet alloc] init];
-    for (int index = 0; index < [beacons count]; index++) {
-        CLBeacon *curr = [beacons objectAtIndex:index];
-        NSString *identifier = [NSString stringWithFormat:@"%@/%@", curr.major, curr.minor];
-        
-        // this is very fast constant time lookup in a hash table
-        if ([lookup containsObject:identifier]) {
-            [mutableBeacons removeObjectAtIndex:index];
-        } else {
-            [lookup addObject:identifier];
-        }
-    }
-    
-    return [mutableBeacons copy];
-}
-
-#pragma mark - Table view functionality
-- (NSString *)detailsStringForBeacon:(CLBeacon *)beacon
-{
-    NSString *proximity;
-    switch (beacon.proximity) {
-        case CLProximityNear:
-            proximity = @"Near";
-            break;
-        case CLProximityImmediate:
-            proximity = @"Immediate";
-            break;
-        case CLProximityFar:
-            proximity = @"Far";
-            break;
-        case CLProximityUnknown:
-        default:
-            proximity = @"Unknown";
-            break;
-    }
-    
-    NSString *format = @"%@, %@ • %@ • %f • %li";
-    //    NSLog(format);
-    return [NSString stringWithFormat:format, beacon.major, beacon.minor, proximity, beacon.accuracy, beacon.rssi];
-}
-
-
 
 #pragma mark - Common
 - (void)createBeaconRegion
@@ -425,6 +317,27 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
             return;
             break;
     }
+}
+
+- (NSArray *)filteredBeacons:(NSArray *)beacons
+{
+    // Filters duplicate beacons out; this may happen temporarily if the originating device changes its Bluetooth id
+    NSMutableArray *mutableBeacons = [beacons mutableCopy];
+    
+    NSMutableSet *lookup = [[NSMutableSet alloc] init];
+    for (int index = 0; index < [beacons count]; index++) {
+        CLBeacon *curr = [beacons objectAtIndex:index];
+        NSString *identifier = [NSString stringWithFormat:@"%@/%@", curr.major, curr.minor];
+        
+        // this is very fast constant time lookup in a hash table
+        if ([lookup containsObject:identifier]) {
+            [mutableBeacons removeObjectAtIndex:index];
+        } else {
+            [lookup addObject:identifier];
+        }
+    }
+    
+    return [mutableBeacons copy];
 }
 
 - (void)locationManager:(CLLocationManager *)manager
