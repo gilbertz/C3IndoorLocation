@@ -37,7 +37,7 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
     NTRangingRow
 };
 
-@interface C3ViewController ()<C3ArrowViewDelegate,UIWebViewDelegate,CLLocationManagerDelegate, CBPeripheralManagerDelegate>
+@interface C3ViewController ()<C3ArrowViewDelegate,UIWebViewDelegate,CLLocationManagerDelegate>
 
 @property (strong, nonatomic) C3ArrowView *arrowView;
 @property (weak, nonatomic) IBOutlet UILabel *navigationLabel;
