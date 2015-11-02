@@ -40,12 +40,12 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
 @property (strong, nonatomic) C3ArrowView *arrowView;
 @property (weak, nonatomic) IBOutlet UILabel *navigationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *navigationTitleLabel;
-@property (strong, nonatomic) UIImagePickerController *picker;
-@property (weak, nonatomic) IBOutlet UIView *controlsView;
-@property (weak, nonatomic) IBOutlet UILabel *distanceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *locationTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *distanceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *distanceTitleLabel;
+@property (strong, nonatomic) UIImagePickerController *picker;
+@property (weak, nonatomic) IBOutlet UIView *controlsView;
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) CLBeaconRegion *beaconRegion;
 @property (nonatomic, strong) CBPeripheralManager *peripheralManager;
@@ -63,6 +63,7 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    //不使用AutoLayout的方式来布局
     [self.view setTranslatesAutoresizingMaskIntoConstraints:YES];
 }
 
@@ -95,7 +96,7 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
     overlayView.backgroundColor = [UIColor clearColor];
     
     [self setupArrowViewInView:overlayView];
-    self.controlsView.alpha = 0.5;
+    self.controlsView.alpha = 0.9;
     [overlayView addSubview:self.controlsView];
     [overlayView addSubview:self.distanceLabel];
     [overlayView addSubview:self.locationLabel];
