@@ -12,31 +12,23 @@
 		FEB7DD011BDD00A0009FCE6D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DCFF1BDD00A0009FCE6D /* Main.storyboard */; };
 		FEB7DD031BDD00A0009FCE6D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD021BDD00A0009FCE6D /* Assets.xcassets */; };
 		FEB7DD061BDD00A0009FCE6D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD041BDD00A0009FCE6D /* LaunchScreen.storyboard */; };
-		FEB7DD0F1BDD0106009FCE6D /* C3ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB7DD0E1BDD0106009FCE6D /* C3ViewController.m */; settings = {ASSET_TAGS = (); }; };
-		FEB7DD121BDD013B009FCE6D /* C3ArrowView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB7DD111BDD013B009FCE6D /* C3ArrowView.m */; settings = {ASSET_TAGS = (); }; };
-		FEB7DD181BDD038C009FCE6D /* CLLocation+AFExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB7DD171BDD038C009FCE6D /* CLLocation+AFExtensions.m */; settings = {ASSET_TAGS = (); }; };
-		FEB7DD1C1BDD058F009FCE6D /* CLLocationManager+AFExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB7DD1B1BDD058F009FCE6D /* CLLocationManager+AFExtensions.m */; settings = {ASSET_TAGS = (); }; };
-		FEB7DD331BDD0EEC009FCE6D /* 215.svg in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD1E1BDD0EEC009FCE6D /* 215.svg */; settings = {ASSET_TAGS = (); }; };
-		FEB7DD341BDD0EEC009FCE6D /* 215_30.svg in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD1F1BDD0EEC009FCE6D /* 215_30.svg */; settings = {ASSET_TAGS = (); }; };
-		FEB7DD351BDD0EEC009FCE6D /* 216_6.svg in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD201BDD0EEC009FCE6D /* 216_6.svg */; settings = {ASSET_TAGS = (); }; };
-		FEB7DD361BDD0EEC009FCE6D /* april.json in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD211BDD0EEC009FCE6D /* april.json */; settings = {ASSET_TAGS = (); }; };
-		FEB7DD371BDD0EEC009FCE6D /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD221BDD0EEC009FCE6D /* arrow.png */; settings = {ASSET_TAGS = (); }; };
-		FEB7DD381BDD0EEC009FCE6D /* bailian.svg in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD231BDD0EEC009FCE6D /* bailian.svg */; settings = {ASSET_TAGS = (); }; };
-		FEB7DD391BDD0EEC009FCE6D /* bright.json in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD241BDD0EEC009FCE6D /* bright.json */; settings = {ASSET_TAGS = (); }; };
-		FEB7DD3A1BDD0EEC009FCE6D /* estimote.json in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD251BDD0EEC009FCE6D /* estimote.json */; settings = {ASSET_TAGS = (); }; };
-		FEB7DD3B1BDD0EEC009FCE6D /* index.css in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD261BDD0EEC009FCE6D /* index.css */; settings = {ASSET_TAGS = (); }; };
-		FEB7DD3C1BDD0EEC009FCE6D /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD271BDD0EEC009FCE6D /* index.html */; settings = {ASSET_TAGS = (); }; };
-		FEB7DD3D1BDD0EEC009FCE6D /* jquery.js in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD281BDD0EEC009FCE6D /* jquery.js */; settings = {ASSET_TAGS = (); }; };
-		FEB7DD3E1BDD0EEC009FCE6D /* jquery.wayfinding.js in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD291BDD0EEC009FCE6D /* jquery.wayfinding.js */; settings = {ASSET_TAGS = (); }; };
-		FEB7DD3F1BDD0EEC009FCE6D /* layout.css in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD2A1BDD0EEC009FCE6D /* layout.css */; settings = {ASSET_TAGS = (); }; };
-		FEB7DD401BDD0EEC009FCE6D /* list.js in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD2B1BDD0EEC009FCE6D /* list.js */; settings = {ASSET_TAGS = (); }; };
-		FEB7DD411BDD0EEC009FCE6D /* map216.png in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD2C1BDD0EEC009FCE6D /* map216.png */; settings = {ASSET_TAGS = (); }; };
-		FEB7DD421BDD0EEC009FCE6D /* podo.min.js in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD2D1BDD0EEC009FCE6D /* podo.min.js */; settings = {ASSET_TAGS = (); }; };
-		FEB7DD431BDD0EEC009FCE6D /* SEIEE.svg in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD2E1BDD0EEC009FCE6D /* SEIEE.svg */; settings = {ASSET_TAGS = (); }; };
-		FEB7DD441BDD0EEC009FCE6D /* snap.svg-min.js in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD2F1BDD0EEC009FCE6D /* snap.svg-min.js */; settings = {ASSET_TAGS = (); }; };
-		FEB7DD451BDD0EEC009FCE6D /* test.js in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD301BDD0EEC009FCE6D /* test.js */; settings = {ASSET_TAGS = (); }; };
-		FEB7DD461BDD0EEC009FCE6D /* usesnap.js in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD311BDD0EEC009FCE6D /* usesnap.js */; settings = {ASSET_TAGS = (); }; };
-		FEB7DD471BDD0EEC009FCE6D /* yunzi.json in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD321BDD0EEC009FCE6D /* yunzi.json */; settings = {ASSET_TAGS = (); }; };
+		FEB7DD0F1BDD0106009FCE6D /* C3ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB7DD0E1BDD0106009FCE6D /* C3ViewController.m */; };
+		FEB7DD121BDD013B009FCE6D /* C3ArrowView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB7DD111BDD013B009FCE6D /* C3ArrowView.m */; };
+		FEB7DD181BDD038C009FCE6D /* CLLocation+AFExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB7DD171BDD038C009FCE6D /* CLLocation+AFExtensions.m */; };
+		FEB7DD1C1BDD058F009FCE6D /* CLLocationManager+AFExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB7DD1B1BDD058F009FCE6D /* CLLocationManager+AFExtensions.m */; };
+		FEB7DD361BDD0EEC009FCE6D /* april.json in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD211BDD0EEC009FCE6D /* april.json */; };
+		FEB7DD371BDD0EEC009FCE6D /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD221BDD0EEC009FCE6D /* arrow.png */; };
+		FEB7DD391BDD0EEC009FCE6D /* bright.json in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD241BDD0EEC009FCE6D /* bright.json */; };
+		FEB7DD3A1BDD0EEC009FCE6D /* estimote.json in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD251BDD0EEC009FCE6D /* estimote.json */; };
+		FEB7DD3B1BDD0EEC009FCE6D /* index.css in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD261BDD0EEC009FCE6D /* index.css */; };
+		FEB7DD3C1BDD0EEC009FCE6D /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD271BDD0EEC009FCE6D /* index.html */; };
+		FEB7DD3D1BDD0EEC009FCE6D /* jquery.js in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD281BDD0EEC009FCE6D /* jquery.js */; };
+		FEB7DD3E1BDD0EEC009FCE6D /* jquery.wayfinding.js in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD291BDD0EEC009FCE6D /* jquery.wayfinding.js */; };
+		FEB7DD401BDD0EEC009FCE6D /* list.js in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD2B1BDD0EEC009FCE6D /* list.js */; };
+		FEB7DD421BDD0EEC009FCE6D /* podo.min.js in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD2D1BDD0EEC009FCE6D /* podo.min.js */; };
+		FEB7DD431BDD0EEC009FCE6D /* SEIEE.svg in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD2E1BDD0EEC009FCE6D /* SEIEE.svg */; };
+		FEB7DD441BDD0EEC009FCE6D /* snap.svg-min.js in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD2F1BDD0EEC009FCE6D /* snap.svg-min.js */; };
+		FEB7DD471BDD0EEC009FCE6D /* yunzi.json in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD321BDD0EEC009FCE6D /* yunzi.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,26 +49,18 @@
 		FEB7DD191BDD0444009FCE6D /* C3IndoorLocation-PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "C3IndoorLocation-PrefixHeader.pch"; sourceTree = "<group>"; };
 		FEB7DD1A1BDD058F009FCE6D /* CLLocationManager+AFExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CLLocationManager+AFExtensions.h"; sourceTree = "<group>"; };
 		FEB7DD1B1BDD058F009FCE6D /* CLLocationManager+AFExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CLLocationManager+AFExtensions.m"; sourceTree = "<group>"; };
-		FEB7DD1E1BDD0EEC009FCE6D /* 215.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = 215.svg; sourceTree = "<group>"; };
-		FEB7DD1F1BDD0EEC009FCE6D /* 215_30.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = 215_30.svg; sourceTree = "<group>"; };
-		FEB7DD201BDD0EEC009FCE6D /* 216_6.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = 216_6.svg; sourceTree = "<group>"; };
 		FEB7DD211BDD0EEC009FCE6D /* april.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = april.json; sourceTree = "<group>"; };
 		FEB7DD221BDD0EEC009FCE6D /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
-		FEB7DD231BDD0EEC009FCE6D /* bailian.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = bailian.svg; sourceTree = "<group>"; };
 		FEB7DD241BDD0EEC009FCE6D /* bright.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = bright.json; sourceTree = "<group>"; };
 		FEB7DD251BDD0EEC009FCE6D /* estimote.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = estimote.json; sourceTree = "<group>"; };
 		FEB7DD261BDD0EEC009FCE6D /* index.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = index.css; sourceTree = "<group>"; };
 		FEB7DD271BDD0EEC009FCE6D /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		FEB7DD281BDD0EEC009FCE6D /* jquery.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.js; sourceTree = "<group>"; };
 		FEB7DD291BDD0EEC009FCE6D /* jquery.wayfinding.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.wayfinding.js; sourceTree = "<group>"; };
-		FEB7DD2A1BDD0EEC009FCE6D /* layout.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = layout.css; sourceTree = "<group>"; };
 		FEB7DD2B1BDD0EEC009FCE6D /* list.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = list.js; sourceTree = "<group>"; };
-		FEB7DD2C1BDD0EEC009FCE6D /* map216.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map216.png; sourceTree = "<group>"; };
 		FEB7DD2D1BDD0EEC009FCE6D /* podo.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = podo.min.js; sourceTree = "<group>"; };
 		FEB7DD2E1BDD0EEC009FCE6D /* SEIEE.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = SEIEE.svg; sourceTree = "<group>"; };
 		FEB7DD2F1BDD0EEC009FCE6D /* snap.svg-min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "snap.svg-min.js"; sourceTree = "<group>"; };
-		FEB7DD301BDD0EEC009FCE6D /* test.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = test.js; sourceTree = "<group>"; };
-		FEB7DD311BDD0EEC009FCE6D /* usesnap.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = usesnap.js; sourceTree = "<group>"; };
 		FEB7DD321BDD0EEC009FCE6D /* yunzi.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = yunzi.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -142,26 +126,18 @@
 		FEB7DD1D1BDD0EEC009FCE6D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				FEB7DD1E1BDD0EEC009FCE6D /* 215.svg */,
-				FEB7DD1F1BDD0EEC009FCE6D /* 215_30.svg */,
-				FEB7DD201BDD0EEC009FCE6D /* 216_6.svg */,
 				FEB7DD211BDD0EEC009FCE6D /* april.json */,
 				FEB7DD221BDD0EEC009FCE6D /* arrow.png */,
-				FEB7DD231BDD0EEC009FCE6D /* bailian.svg */,
 				FEB7DD241BDD0EEC009FCE6D /* bright.json */,
 				FEB7DD251BDD0EEC009FCE6D /* estimote.json */,
 				FEB7DD261BDD0EEC009FCE6D /* index.css */,
 				FEB7DD271BDD0EEC009FCE6D /* index.html */,
 				FEB7DD281BDD0EEC009FCE6D /* jquery.js */,
 				FEB7DD291BDD0EEC009FCE6D /* jquery.wayfinding.js */,
-				FEB7DD2A1BDD0EEC009FCE6D /* layout.css */,
 				FEB7DD2B1BDD0EEC009FCE6D /* list.js */,
-				FEB7DD2C1BDD0EEC009FCE6D /* map216.png */,
 				FEB7DD2D1BDD0EEC009FCE6D /* podo.min.js */,
 				FEB7DD2E1BDD0EEC009FCE6D /* SEIEE.svg */,
 				FEB7DD2F1BDD0EEC009FCE6D /* snap.svg-min.js */,
-				FEB7DD301BDD0EEC009FCE6D /* test.js */,
-				FEB7DD311BDD0EEC009FCE6D /* usesnap.js */,
 				FEB7DD321BDD0EEC009FCE6D /* yunzi.json */,
 			);
 			path = Resources;
@@ -231,28 +207,20 @@
 			files = (
 				FEB7DD061BDD00A0009FCE6D /* LaunchScreen.storyboard in Resources */,
 				FEB7DD471BDD0EEC009FCE6D /* yunzi.json in Resources */,
-				FEB7DD351BDD0EEC009FCE6D /* 216_6.svg in Resources */,
 				FEB7DD3E1BDD0EEC009FCE6D /* jquery.wayfinding.js in Resources */,
-				FEB7DD341BDD0EEC009FCE6D /* 215_30.svg in Resources */,
 				FEB7DD3C1BDD0EEC009FCE6D /* index.html in Resources */,
 				FEB7DD401BDD0EEC009FCE6D /* list.js in Resources */,
-				FEB7DD451BDD0EEC009FCE6D /* test.js in Resources */,
-				FEB7DD331BDD0EEC009FCE6D /* 215.svg in Resources */,
 				FEB7DD031BDD00A0009FCE6D /* Assets.xcassets in Resources */,
 				FEB7DD421BDD0EEC009FCE6D /* podo.min.js in Resources */,
 				FEB7DD3A1BDD0EEC009FCE6D /* estimote.json in Resources */,
-				FEB7DD381BDD0EEC009FCE6D /* bailian.svg in Resources */,
-				FEB7DD411BDD0EEC009FCE6D /* map216.png in Resources */,
 				FEB7DD011BDD00A0009FCE6D /* Main.storyboard in Resources */,
 				FEB7DD3B1BDD0EEC009FCE6D /* index.css in Resources */,
 				FEB7DD391BDD0EEC009FCE6D /* bright.json in Resources */,
 				FEB7DD361BDD0EEC009FCE6D /* april.json in Resources */,
-				FEB7DD461BDD0EEC009FCE6D /* usesnap.js in Resources */,
 				FEB7DD3D1BDD0EEC009FCE6D /* jquery.js in Resources */,
 				FEB7DD371BDD0EEC009FCE6D /* arrow.png in Resources */,
 				FEB7DD441BDD0EEC009FCE6D /* snap.svg-min.js in Resources */,
 				FEB7DD431BDD0EEC009FCE6D /* SEIEE.svg in Resources */,
-				FEB7DD3F1BDD0EEC009FCE6D /* layout.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,6 +389,7 @@
 				FEB7DD0C1BDD00A0009FCE6D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
