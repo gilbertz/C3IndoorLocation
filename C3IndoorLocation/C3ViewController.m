@@ -10,6 +10,10 @@
 #import "C3ArrowView.h"
 #import "CLLocationManager+AFExtensions.h"
 #import <CoreBluetooth/CoreBluetooth.h>
+#import "C3LeftArrowView.h"
+#import "C3Layer.h"
+#import "C3LeftTurnLayer.h"
+#import "C3RightTurnLayer.h"
 
 //weixin
 //static NSString * const kUUID = @"FDA50693-A4E2-4FB1-AFCF-C6EB07647825";
@@ -40,6 +44,8 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
 @interface C3ViewController ()<C3ArrowViewDelegate,UIWebViewDelegate,CLLocationManagerDelegate>
 
 @property (strong, nonatomic) C3ArrowView *arrowView;
+@property (strong, nonatomic) C3LeftArrowView *leftArrowView;
+
 @property (weak, nonatomic) IBOutlet UILabel *navigationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *navigationTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
@@ -55,6 +61,12 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
 @property (nonatomic, weak) UISwitch *rangingSwitch;
 @property (nonatomic, unsafe_unretained) void *operationContext;
 @property (strong, nonatomic) IBOutlet UIWebView *myWebView;
+@property (strong, nonatomic)UIView *overlayView;
+@property (strong, nonatomic)C3RightTurnLayer *rightTurnLayer;
+@property (strong, nonatomic)C3Layer *straightLayer;
+@property (strong, nonatomic)C3LeftTurnLayer *leftTurnLayer;
+@property (assign, nonatomic) BOOL isAddSublayer;
+@property (strong, nonatomic)CATransformLayer *container;
 
 @end
 
@@ -82,27 +94,36 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
     self.picker.toolbarHidden = YES;
     
     //叠加摄像头上的overlay
-    UIView *overlayView = [[UIView alloc] initWithFrame:self.view.frame];
+    self.overlayView = [[UIView alloc] initWithFrame:self.view.frame];
     
     //overlay的背景透明
-    overlayView.opaque = NO;
-    overlayView.backgroundColor = [UIColor clearColor];
+    self.overlayView.opaque = NO;
+    self.overlayView.backgroundColor = [UIColor clearColor];
     
     //功能面板透明度
     self.controlsView.alpha = 0.9;
     //overlay上添加右侧的功能面板
-    [overlayView addSubview:self.controlsView];
+    [self.overlayView addSubview:self.controlsView];
     //overlay上添加箭头
-    [self setupArrowViewInView:overlayView];
+    [self setupArrowViewInView:self.overlayView];
+    
+    //1.创建自定义的layer
+//    C3Layer *layer=[C3Layer layer];
+//    layer.bounds=CGRectMake(0, 0, 100, 300);
+//    layer.anchorPoint=CGPointMake(0.5, 0.5);
+    
+//    C3LeftTurnLayer *layer = [C3LeftTurnLayer layer];
+//    layer.bounds=CGRectMake(0, 0, 200, 300);
+//    layer.anchorPoint=CGPointMake(0.75, 0.5);
     //overlay上添加目的地、距离、导航信息
-    [overlayView addSubview:self.distanceLabel];
-    [overlayView addSubview:self.locationLabel];
-    [overlayView addSubview:self.locationTitleLabel];
-    [overlayView addSubview:self.distanceTitleLabel];
-    [overlayView addSubview:self.navigationLabel];
-    [overlayView addSubview:self.navigationTitleLabel];
+    [self.overlayView addSubview:self.distanceLabel];
+    [self.overlayView addSubview:self.locationLabel];
+    [self.overlayView addSubview:self.locationTitleLabel];
+    [self.overlayView addSubview:self.distanceTitleLabel];
+    [self.overlayView addSubview:self.navigationLabel];
+    [self.overlayView addSubview:self.navigationTitleLabel];
     //overlay置为camera视图的view
-    self.picker.cameraOverlayView = overlayView;
+    self.picker.cameraOverlayView = self.overlayView;
 
     //controlsView上的mywebview
     NSString *localHTMLPageFilePath = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html"];
@@ -111,6 +132,20 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
     
     self.myWebView.delegate=self;
     self.myWebView.scalesPageToFit = YES;
+}
+
+CATransform3D CATransform3DMakePerspective(CGPoint center, float disZ)
+{
+    CATransform3D transToCenter = CATransform3DMakeTranslation(-center.x, -center.y, 0);
+    CATransform3D transBack = CATransform3DMakeTranslation(center.x, center.y, 0);
+    CATransform3D scale = CATransform3DIdentity;
+    scale.m34 = -1.0f/disZ;
+    return CATransform3DConcat(CATransform3DConcat(transToCenter, scale), transBack);
+}
+
+CATransform3D CATransform3DPerspect(CATransform3D t, CGPoint center, float disZ)
+{
+    return CATransform3DConcat(t, CATransform3DMakePerspective(center, disZ));
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -129,6 +164,21 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
     self.arrowView = [[C3ArrowView alloc] initWithFrame:frame];
     self.arrowView.delegate = self;
     [view addSubview:self.arrowView];
+    
+//    CGRect frame2 = CGRectMake(2.0*view.frame.size.width / 10.0,
+//                              2*view.frame.size.height / 6.0,
+//                              1.0 * view.frame.size.width / 10.0,
+//                              1* view.frame.size.height / 6.0);
+//    self.leftArrowView = [[C3LeftArrowView alloc] initWithFrame:frame2];
+//    [view addSubview:self.leftArrowView];
+}
+
+#pragma mark - NAArrowViewDelegate
+
+- (void)locationManager:(CLLocationManager *)manager
+     didUpdateLocations:(NSArray *)locations
+{
+//        self.distanceLabel.text = [manager distanceToLocation:self.arrowView.destination];
 }
 
 #pragma mark - Button actions
@@ -141,19 +191,12 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
         [self.myWebView stringByEvaluatingJavaScriptFromString:jsonDataString];
     }
     
-    self.locationLabel.text = sender.titleLabel.text;
-    
     if (!self.arrowView.isPointing) {
         [self.arrowView startPointing];
     }
-}
-
-#pragma mark - NAArrowViewDelegate
-
-- (void)locationManager:(CLLocationManager *)manager
-     didUpdateLocations:(NSArray *)locations
-{
-//    self.distanceLabel.text = [manager distanceToLocation:self.arrowView.destination];
+    
+    self.locationLabel.text = sender.titleLabel.text;
+    
 }
 
 #pragma mark UIWebViewDelegate
@@ -176,17 +219,48 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
             if([(NSString *)[components objectAtIndex:1]isEqualToString:@"right"])
             {
                 direction = @"右转";
+                self.rightTurnLayer = [C3RightTurnLayer layer];
+                self.rightTurnLayer.bounds=CGRectMake(0, 0, 200, 300);
+                self.rightTurnLayer.anchorPoint=CGPointMake(0.25, 0.5);
+                //2.设置layer的属性
+                self.rightTurnLayer.backgroundColor=[UIColor clearColor].CGColor;
+                self.rightTurnLayer.position=CGPointMake(2.5*self.view.frame.size.width / 10.0,
+                                           2*self.view.frame.size.height / 6.0);
+                [self.rightTurnLayer setNeedsDisplay];
+                CATransform3D transform = CATransform3DMakeRotation(M_PI/3, 1, 0, 0);
+                self.rightTurnLayer.transform =  CATransform3DPerspect(transform, CGPointMake(0, 0), 200);
+                [self.container removeFromSuperlayer];
+                self.container = [[CATransformLayer alloc] init];
+                //3.添加layer
+                [self.container addSublayer:self.rightTurnLayer];
+                [self.overlayView.layer addSublayer:self.container];
+
             }else if([(NSString *)[components objectAtIndex:1]isEqualToString:@"left"]){
                 direction = @"左转";
             }else if([(NSString *)[components objectAtIndex:1]isEqualToString:@"straight"]){
                 direction = @"直行";
+                self.straightLayer = [C3Layer layer];
+                self.straightLayer.bounds=CGRectMake(0, 0, 200, 300);
+                self.straightLayer.anchorPoint=CGPointMake(0.25, 0.5);
+                //2.设置layer的属性
+                self.straightLayer.backgroundColor=[UIColor clearColor].CGColor;
+                self.straightLayer.position=CGPointMake(2.5*self.view.frame.size.width / 10.0,
+                                                         2*self.view.frame.size.height / 6.0);
+                [self.straightLayer setNeedsDisplay];
+                CATransform3D transform = CATransform3DMakeRotation(M_PI/3, 1, 0, 0);
+                self.straightLayer.transform =  CATransform3DPerspect(transform, CGPointMake(0, 0), 200);
+                [self.container removeFromSuperlayer];
+                self.container = [[CATransformLayer alloc] init];
+                //3.添加layer
+                [self.container addSublayer:self.straightLayer];
+                [self.overlayView.layer addSublayer:self.container];
             }
         
         distance = [components objectAtIndex:2];
         totalDistance = [components objectAtIndex:3];
         location = [components objectAtIndex:4];
         
-        if ([distance isEqualToString:@""]) {
+        if ([distance isEqualToString:@"0"]) {
             self.navigationLabel.text = @"未知";
         }else{
             distance = [NSString stringWithFormat:@"%ld", [distance integerValue]/ARCHITECTSCALE ];

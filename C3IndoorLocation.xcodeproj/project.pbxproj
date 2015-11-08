@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FE1D553D1BEEDF5400D5AFDC /* C3Layer.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1D553C1BEEDF5400D5AFDC /* C3Layer.m */; };
+		FE1F60951BEF0BEA00C4C618 /* C3LeftTurnLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1F60941BEF0BEA00C4C618 /* C3LeftTurnLayer.m */; };
+		FE1F60981BEF0BFF00C4C618 /* C3RightTurnLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1F60971BEF0BFF00C4C618 /* C3RightTurnLayer.m */; };
+		FEA596481BEE18F100E04FAC /* C3LeftArrowView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA596471BEE18F100E04FAC /* C3LeftArrowView.m */; };
 		FEB7DCF81BDD00A0009FCE6D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB7DCF71BDD00A0009FCE6D /* main.m */; };
 		FEB7DCFB1BDD00A0009FCE6D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB7DCFA1BDD00A0009FCE6D /* AppDelegate.m */; };
 		FEB7DD011BDD00A0009FCE6D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DCFF1BDD00A0009FCE6D /* Main.storyboard */; };
@@ -32,6 +36,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FE1D553B1BEEDF5400D5AFDC /* C3Layer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C3Layer.h; sourceTree = "<group>"; };
+		FE1D553C1BEEDF5400D5AFDC /* C3Layer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = C3Layer.m; sourceTree = "<group>"; };
+		FE1F60931BEF0BEA00C4C618 /* C3LeftTurnLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C3LeftTurnLayer.h; sourceTree = "<group>"; };
+		FE1F60941BEF0BEA00C4C618 /* C3LeftTurnLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = C3LeftTurnLayer.m; sourceTree = "<group>"; };
+		FE1F60961BEF0BFF00C4C618 /* C3RightTurnLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C3RightTurnLayer.h; sourceTree = "<group>"; };
+		FE1F60971BEF0BFF00C4C618 /* C3RightTurnLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = C3RightTurnLayer.m; sourceTree = "<group>"; };
+		FEA596461BEE18F100E04FAC /* C3LeftArrowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C3LeftArrowView.h; sourceTree = "<group>"; };
+		FEA596471BEE18F100E04FAC /* C3LeftArrowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = C3LeftArrowView.m; sourceTree = "<group>"; };
 		FEB7DCF31BDD00A0009FCE6D /* C3IndoorLocation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = C3IndoorLocation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEB7DCF71BDD00A0009FCE6D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		FEB7DCF91BDD00A0009FCE6D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -100,6 +112,8 @@
 				FEB7DD0E1BDD0106009FCE6D /* C3ViewController.m */,
 				FEB7DD101BDD013B009FCE6D /* C3ArrowView.h */,
 				FEB7DD111BDD013B009FCE6D /* C3ArrowView.m */,
+				FEA596461BEE18F100E04FAC /* C3LeftArrowView.h */,
+				FEA596471BEE18F100E04FAC /* C3LeftArrowView.m */,
 				FEB7DD161BDD038C009FCE6D /* CLLocation+AFExtensions.h */,
 				FEB7DD171BDD038C009FCE6D /* CLLocation+AFExtensions.m */,
 				FEB7DD1A1BDD058F009FCE6D /* CLLocationManager+AFExtensions.h */,
@@ -110,6 +124,12 @@
 				FEB7DD071BDD00A0009FCE6D /* Info.plist */,
 				FEB7DD1D1BDD0EEC009FCE6D /* Resources */,
 				FEB7DCF61BDD00A0009FCE6D /* Supporting Files */,
+				FE1D553B1BEEDF5400D5AFDC /* C3Layer.h */,
+				FE1D553C1BEEDF5400D5AFDC /* C3Layer.m */,
+				FE1F60931BEF0BEA00C4C618 /* C3LeftTurnLayer.h */,
+				FE1F60941BEF0BEA00C4C618 /* C3LeftTurnLayer.m */,
+				FE1F60961BEF0BFF00C4C618 /* C3RightTurnLayer.h */,
+				FE1F60971BEF0BFF00C4C618 /* C3RightTurnLayer.m */,
 			);
 			path = C3IndoorLocation;
 			sourceTree = "<group>";
@@ -233,10 +253,14 @@
 			files = (
 				FEB7DD1C1BDD058F009FCE6D /* CLLocationManager+AFExtensions.m in Sources */,
 				FEB7DCFB1BDD00A0009FCE6D /* AppDelegate.m in Sources */,
+				FEA596481BEE18F100E04FAC /* C3LeftArrowView.m in Sources */,
+				FE1F60951BEF0BEA00C4C618 /* C3LeftTurnLayer.m in Sources */,
 				FEB7DD181BDD038C009FCE6D /* CLLocation+AFExtensions.m in Sources */,
 				FEB7DD0F1BDD0106009FCE6D /* C3ViewController.m in Sources */,
 				FEB7DD121BDD013B009FCE6D /* C3ArrowView.m in Sources */,
 				FEB7DCF81BDD00A0009FCE6D /* main.m in Sources */,
+				FE1D553D1BEEDF5400D5AFDC /* C3Layer.m in Sources */,
+				FE1F60981BEF0BFF00C4C618 /* C3RightTurnLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
