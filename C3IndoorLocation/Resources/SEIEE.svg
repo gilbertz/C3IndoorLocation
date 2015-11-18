@@ -21,7 +21,7 @@
 <g id="Rooms">
   <a id="R208" xlink:href="#" >
     <g>
-  <path id="svg_22" d="m5426.55225,4614.09131l97.3208,-38.23682l36.25684,80.29639l-41.98145,13.38281l-7.6333,-21.03027l-22.89893,19.11768l7.6333,15.29492l-32.44043,15.29443l-36.25684,-84.11914z" stroke-width="1.5" stroke="#000" fill="#0000ff"/>
+     <path fill="#0000ff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" d="m5216.97461,3935.98071l138.99902,90.99951l40,-69.99951l-53,-34l-12.99951,27l-19,-11l13,-25l-68,-41.99976l-38.99951,63.99976z" id="svg_32"/>
     </g>
   </a>
   <a id="R215" xlink:href="#" >
@@ -33,11 +33,10 @@
 
 <g id="Doors">
     <line id="R215_1_" fill="none" stroke="#00FF00" x1="2663" y1="1684" x2="2661" y2="1682"/>
-    <line id="R208_1_" fill="none" stroke="#00FF00" x1="5547" y1="4775" x2="5545" y2="4773"/>
+    <line id="R208_1_" fill="none" stroke="#00FF00" x1="5377" y1="3851" x2="5375" y2="3949"/>
 </g>
 
 <g id="Paths">
-
   <line fill="none" stroke="#00FFFF" x1="2661" y1="1682" x2="3614" y2="1218" />
   <line fill="none" stroke="#00FFFF" x1="3614" y1="1218" x2="3953" y2="2013"/>
   <line fill="none" stroke="#00FFFF" x1="3953" y1="2013" x2="4214" y2="2661"/>
@@ -48,9 +47,7 @@
   <line fill="none" stroke="#00FFFF" x1="3410" y1="3874" x2="3744" y2="4463"/>
   <line fill="none" stroke="#00FFFF" x1="3744" y1="4463" x2="4194" y2="4338"/>
   <line fill="none" stroke="#00FFFF" x1="4194" y1="4338" x2="4626" y2="3326"/>
-  <line fill="none" stroke="#00FFFF" x1="4626" y1="3326" x2="5886" y2="4219"/>
-  <line fill="none" stroke="#00FFFF" x1="5886" y1="4219" x2="5952" y2="4635"/>
-  <line fill="none" stroke="#00FFFF" x1="5952" y1="4635" x2="5547" y2="4775"/>
+  <line fill="none" stroke="#00FFFF" x1="4626" y1="3326" x2="5377" y2="3851"/>
 </g>
 
 <image xlink:href="arrow.png" id="currentLocation" x="0" y="0" width="44" height="44"  visibility="display"/>
