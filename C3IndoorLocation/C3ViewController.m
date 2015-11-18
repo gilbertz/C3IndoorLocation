@@ -41,7 +41,7 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
     NTRangingRow
 };
 
-@interface C3ViewController ()<C3ArrowViewDelegate,UIWebViewDelegate,CLLocationManagerDelegate>
+@interface C3ViewController ()<C3ArrowViewDelegate,UIWebViewDelegate,CLLocationManagerDelegate,UITableViewDataSource,UITableViewDelegate>
 
 @property (strong, nonatomic) C3ArrowView *arrowView;
 @property (strong, nonatomic) C3LeftArrowView *leftArrowView;
@@ -67,6 +67,8 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
 @property (strong, nonatomic)C3LeftTurnLayer *leftTurnLayer;
 @property (assign, nonatomic) BOOL isAddSublayer;
 @property (strong, nonatomic)CATransformLayer *container;
+@property (strong, nonatomic)UITableView *tableView;
+@property (strong, nonatomic)NSArray *destinationArray;
 
 @end
 
@@ -132,6 +134,14 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
     
     self.myWebView.delegate=self;
     self.myWebView.scalesPageToFit = YES;
+    
+    self.destinationArray = @[@"208",@"209"];
+    self.tableView = [[UITableView alloc] init];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    
+    self.tableView.frame = CGRectMake(512, 0, 512, 768);
+
 }
 
 CATransform3D CATransform3DMakePerspective(CGPoint center, float disZ)
@@ -183,20 +193,42 @@ CATransform3D CATransform3DPerspect(CATransform3D t, CGPoint center, float disZ)
 
 #pragma mark - Button actions
 - (IBAction)buttonPressed:(UIButton *)sender {
-    if ([sender.titleLabel.text isEqualToString:@"R208"]) {
-        self.arrowView.destination =
-        [[CLLocation alloc] initWithLatitude:31.02608
-                                   longitude:121.43825];
-        NSString *jsonDataString = [NSString stringWithFormat:@"button(%@)", @"R208"];
-        [self.myWebView stringByEvaluatingJavaScriptFromString:jsonDataString];
+    [self.overlayView addSubview:self.tableView];
+    
+}
+
+#pragma mark - UITableView datasource
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 2;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+    }
+    cell.textLabel.text = self.destinationArray[indexPath.row];
+    return cell;
+}
+
+#pragma mark - UITableView delegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+
+    self.locationLabel.text = self.destinationArray[indexPath.row];
+    NSString *jsonDataString = [NSString stringWithFormat:@"button(%@)",self.destinationArray[indexPath.row]];
+    [self.myWebView stringByEvaluatingJavaScriptFromString:jsonDataString];
+    
+    if ([self.destinationArray[indexPath.row] isEqualToString:@"R208"]) {
+        self.arrowView.destination =[[CLLocation alloc] initWithLatitude:31.02608 longitude:121.43825];
+    }else{
+        self.arrowView.destination =[[CLLocation alloc] initWithLatitude:31.02608 longitude:121.43825];
     }
     
     if (!self.arrowView.isPointing) {
         [self.arrowView startPointing];
     }
     
-    self.locationLabel.text = sender.titleLabel.text;
-    
+    [self.tableView removeFromSuperview];
 }
 
 #pragma mark UIWebViewDelegate

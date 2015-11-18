@@ -33,6 +33,7 @@
 		FEB7DD431BDD0EEC009FCE6D /* SEIEE.svg in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD2E1BDD0EEC009FCE6D /* SEIEE.svg */; };
 		FEB7DD441BDD0EEC009FCE6D /* snap.svg-min.js in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD2F1BDD0EEC009FCE6D /* snap.svg-min.js */; };
 		FEB7DD471BDD0EEC009FCE6D /* yunzi.json in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD321BDD0EEC009FCE6D /* yunzi.json */; };
+		FEC204671BFC438400616A9B /* ibeacon.png in Resources */ = {isa = PBXBuildFile; fileRef = FEC204661BFC438400616A9B /* ibeacon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,6 +75,7 @@
 		FEB7DD2E1BDD0EEC009FCE6D /* SEIEE.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = SEIEE.svg; sourceTree = "<group>"; };
 		FEB7DD2F1BDD0EEC009FCE6D /* snap.svg-min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "snap.svg-min.js"; sourceTree = "<group>"; };
 		FEB7DD321BDD0EEC009FCE6D /* yunzi.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = yunzi.json; sourceTree = "<group>"; };
+		FEC204661BFC438400616A9B /* ibeacon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ibeacon.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +148,7 @@
 		FEB7DD1D1BDD0EEC009FCE6D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FEC204661BFC438400616A9B /* ibeacon.png */,
 				FEB7DD211BDD0EEC009FCE6D /* april.json */,
 				FEB7DD221BDD0EEC009FCE6D /* arrow.png */,
 				FEB7DD241BDD0EEC009FCE6D /* bright.json */,
@@ -233,6 +236,7 @@
 				FEB7DD031BDD00A0009FCE6D /* Assets.xcassets in Resources */,
 				FEB7DD421BDD0EEC009FCE6D /* podo.min.js in Resources */,
 				FEB7DD3A1BDD0EEC009FCE6D /* estimote.json in Resources */,
+				FEC204671BFC438400616A9B /* ibeacon.png in Resources */,
 				FEB7DD011BDD00A0009FCE6D /* Main.storyboard in Resources */,
 				FEB7DD3B1BDD0EEC009FCE6D /* index.css in Resources */,
 				FEB7DD391BDD0EEC009FCE6D /* bright.json in Resources */,

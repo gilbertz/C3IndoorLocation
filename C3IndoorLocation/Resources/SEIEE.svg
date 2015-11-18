@@ -19,6 +19,11 @@
    <path fill="#fff" stroke="#000" stroke-width="1.5" d="m4976.54053,4745.521l1241.72852,-462.03857l28.87744,129.94873l101.0708,-4.81299l24.06445,86.63184l-81.81934,19.25195l33.69043,182.89014l-1222.47705,452.4126l-115.50977,-86.63184l-43.31592,-115.50977l33.69043,-202.14209z" id="svg_14"/>
 </g>
 <g id="Rooms">
+    <a id="R209" xlink:href="#" >
+    <g>
+    <path id="svg_64" d="m3501.99902,3793.99902l0,82l30,-2l0,30l-32,2l0,30l68,-4l-6,-144l-60,6z" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" stroke="#000" fill="#00ffff"/>
+    </g>
+  </a>
   <a id="R208" xlink:href="#" >
     <g>
      <path fill="#0000ff" stroke="#000" stroke-width="1.5" stroke-opacity="null" fill-opacity="null" d="m5216.97461,3935.98071l138.99902,90.99951l40,-69.99951l-53,-34l-12.99951,27l-19,-11l13,-25l-68,-41.99976l-38.99951,63.99976z" id="svg_32"/>
@@ -33,7 +38,8 @@
 
 <g id="Doors">
     <line id="R215_1_" fill="none" stroke="#00FF00" x1="2663" y1="1684" x2="2661" y2="1682"/>
-    <line id="R208_1_" fill="none" stroke="#00FF00" x1="5377" y1="3851" x2="5375" y2="3949"/>
+    <line id="R208_1_" fill="none" stroke="#00FF00" x1="5377" y1="3851" x2="5375" y2="3849"/>
+    <line id="R209_1_" fill="none" stroke="#00FF00" x1="3410" y1="3874" x2="3408" y2="3872"/>
 </g>
 
 <g id="Paths">
@@ -50,5 +56,47 @@
   <line fill="none" stroke="#00FFFF" x1="4626" y1="3326" x2="5377" y2="3851"/>
 </g>
 
+<ellipse rx="22" ry="22" cx="2661" cy="1682" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#ff0000"/>
+<ellipse rx="22" ry="22" cx="2852" cy="1589" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#ff0000"/>
+<ellipse rx="22" ry="22" cx="3043" cy="1496" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#ff0000"/>
+<ellipse rx="22" ry="22" cx="3233" cy="1404" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#ff0000"/>
+<ellipse rx="22" ry="22" cx="3424" cy="1311" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#ff0000"/>
+<ellipse rx="22" ry="22" cx="3614" cy="1218" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#ff0000"/>
+
+<ellipse rx="22" ry="22" cx="3699" cy="1417" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#ff0000"/>
+<ellipse rx="22" ry="22" cx="3783" cy="1615" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#ff0000"/>
+<ellipse rx="22" ry="22" cx="3868" cy="1814" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#ff0000"/>
+<ellipse rx="22" ry="22" cx="3953" cy="2013" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#ff0000"/>
+
+<ellipse rx="22" ry="22" cx="4018" cy="2175" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#ff0000"/>
+<ellipse rx="22" ry="22" cx="4083" cy="2337" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#ff0000"/>
+<ellipse rx="22" ry="22" cx="4148" cy="2499" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#ff0000"/>
+<ellipse rx="22" ry="22" cx="4214" cy="2661" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#ff0000"/>
+
+<ellipse rx="22" ry="22" cx="4080" cy="2863" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#ff0000"/>
+<ellipse rx="22" ry="22" cx="3946" cy="3065" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#ff0000"/>
+<ellipse rx="22" ry="22" cx="3812" cy="3267" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#ff0000"/>
+<ellipse rx="22" ry="22" cx="3678" cy="3469" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#ff0000"/>
+<ellipse rx="22" ry="22" cx="3544" cy="3671" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#ff0000"/>
+<ellipse rx="22" ry="22" cx="3410" cy="3874" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#ff0000"/>
+
+<ellipse rx="22" ry="22" cx="3521" cy="4070" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#ff0000"/>
+<ellipse rx="22" ry="22" cx="3632" cy="4266" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#ff0000"/>
+<ellipse rx="22" ry="22" cx="3744" cy="4463" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#ff0000"/>
+
+<ellipse rx="22" ry="22" cx="3969" cy="4401" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#ff0000"/>
+<ellipse rx="22" ry="22" cx="4194" cy="4338" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#ff0000"/>
+
+<ellipse rx="22" ry="22" cx="4304" cy="4085" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#ff0000"/>
+<ellipse rx="22" ry="22" cx="4412" cy="3832" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#ff0000"/>
+<ellipse rx="22" ry="22" cx="4520" cy="3579" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#ff0000"/>
+<ellipse rx="22" ry="22" cx="4626" cy="3326" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#ff0000"/>
+
+<ellipse rx="22" ry="22" cx="4814" cy="3457" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#ff0000"/>
+<ellipse rx="22" ry="22" cx="5002" cy="3588" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#ff0000"/>
+<ellipse rx="22" ry="22" cx="5190" cy="3719" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#ff0000"/>
+<ellipse rx="22" ry="22" cx="5377" cy="3851" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#ff0000"/>
+
 <image xlink:href="arrow.png" id="currentLocation" x="0" y="0" width="44" height="44"  visibility="display"/>
+
 </svg>
