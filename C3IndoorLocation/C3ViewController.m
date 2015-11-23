@@ -14,6 +14,7 @@
 #import "C3Layer.h"
 #import "C3LeftTurnLayer.h"
 #import "C3RightTurnLayer.h"
+#import <AVFoundation/AVFoundation.h>
 
 //weixin
 //static NSString * const kUUID = @"FDA50693-A4E2-4FB1-AFCF-C6EB07647825";
@@ -46,21 +47,21 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
 @property (strong, nonatomic) C3ArrowView *arrowView;
 @property (strong, nonatomic) C3LeftArrowView *leftArrowView;
 
-@property (weak, nonatomic) IBOutlet UILabel *navigationLabel;
-@property (weak, nonatomic) IBOutlet UILabel *navigationTitleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *locationLabel;
-@property (weak, nonatomic) IBOutlet UILabel *locationTitleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *distanceLabel;
-@property (weak, nonatomic) IBOutlet UILabel *distanceTitleLabel;
+@property (strong, nonatomic) UILabel *navigationLabel;
+@property (strong, nonatomic) UILabel *navigationTitleLabel;
+@property (strong, nonatomic) UILabel *locationLabel;
+@property (strong, nonatomic) UILabel *locationTitleLabel;
+@property (strong, nonatomic) UILabel *distanceLabel;
+@property (strong, nonatomic) UILabel *distanceTitleLabel;
 @property (strong, nonatomic) UIImagePickerController *picker;
-@property (weak, nonatomic) IBOutlet UIView *controlsView;
+@property (strong, nonatomic) UIView *mapView;
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) CLBeaconRegion *beaconRegion;
 @property (nonatomic, strong) CBPeripheralManager *peripheralManager;
 @property (nonatomic, strong) NSArray *detectedBeacons;
 @property (nonatomic, weak) UISwitch *rangingSwitch;
 @property (nonatomic, unsafe_unretained) void *operationContext;
-@property (strong, nonatomic) IBOutlet UIWebView *myWebView;
+@property (strong, nonatomic) UIWebView *myWebView;
 @property (strong, nonatomic)UIView *overlayView;
 @property (strong, nonatomic)C3RightTurnLayer *rightTurnLayer;
 @property (strong, nonatomic)C3Layer *straightLayer;
@@ -70,80 +71,184 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
 @property (strong, nonatomic)UITableView *tableView;
 @property (strong, nonatomic)NSArray *destinationArray;
 
+@property (nonatomic, strong)       AVCaptureSession            * session;
+//AVCaptureSession对象来执行输入设备和输出设备之间的数据传递
+@property (nonatomic, strong)       AVCaptureDeviceInput        * videoInput;
+//AVCaptureDeviceInput对象是输入流
+@property (nonatomic, strong)       AVCaptureStillImageOutput   * stillImageOutput;
+//照片输出流对象，当然我的照相机只有拍照功能，所以只需要这个对象就够了
+@property (nonatomic, strong)       AVCaptureVideoPreviewLayer  * previewLayer;
+//预览图层，来显示照相机拍摄到的画面
+@property (nonatomic, strong)       UIView                      * cameraShowView;
+//放置预览图层的View
+
+//信息栏
+@property (nonatomic, strong)UIView *footerInfoView ;
+@property (nonatomic, strong)UIView *headerInfoView ;
+
+@property (nonatomic, strong)UIButton *destinationChooseButton;
+
 @end
 
 @implementation C3ViewController
 
+#pragma mark - AVFoundation camera
+- (void) initialSession
+{
+    //这个方法的执行我放在init方法里了
+    self.session = [[AVCaptureSession alloc] init];
+    self.videoInput = [[AVCaptureDeviceInput alloc] initWithDevice:[self backCamera] error:nil];
+    //[self fronCamera]方法会返回一个AVCaptureDevice对象，因为我初始化时是采用前摄像头，所以这么写，具体的实现方法后面会介绍
+    self.stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
+    NSDictionary * outputSettings = [[NSDictionary alloc] initWithObjectsAndKeys:AVVideoCodecJPEG,AVVideoCodecKey, nil];
+    //这是输出流的设置参数AVVideoCodecJPEG参数表示以JPEG的图片格式输出图片
+    [self.stillImageOutput setOutputSettings:outputSettings];
+    
+    if ([self.session canAddInput:self.videoInput]) {
+        [self.session addInput:self.videoInput];
+    }
+    if ([self.session canAddOutput:self.stillImageOutput]) {
+        [self.session addOutput:self.stillImageOutput];
+    }
+    
+}
+
+- (AVCaptureDevice *)backCamera {
+    return [self cameraWithPosition:AVCaptureDevicePositionBack];
+}
+
+- (AVCaptureDevice *)cameraWithPosition:(AVCaptureDevicePosition) position {
+    NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+    for (AVCaptureDevice *device in devices) {
+        if ([device position] == position) {
+            return device;
+        }
+    }
+    return nil;
+}
+
+- (void) setUpCameraLayer
+{
+    if (self.previewLayer == nil) {
+        self.previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:self.session];
+        UIView * view = self.cameraShowView;
+        CALayer * viewLayer = [view layer];
+        [viewLayer setMasksToBounds:YES];
+        
+        CGRect bounds = [view bounds];
+        [self.previewLayer setFrame:bounds];
+
+        [self.previewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
+        [viewLayer insertSublayer:self.previewLayer below:[[viewLayer sublayers] objectAtIndex:0]];
+        
+        CATransform3D transform = CATransform3DMakeRotation(3*M_PI/2, 0, 0, 1);
+        self.cameraShowView.layer.transform =  transform;
+        
+        
+    }
+}
+
 #pragma mark - Lifecycle
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    //不使用AutoLayout的方式来布局
-    [self.view setTranslatesAutoresizingMaskIntoConstraints:YES];
-}
+- (void) viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self initialSession];
+    self.cameraShowView = [[UIView alloc] initWithFrame:CGRectMake(85.5, -85.5+50, 512, 683)];
+    [self setUpCameraLayer];
+    [self.view addSubview:self.cameraShowView];
+    
+    self.headerInfoView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 683, 50)];
+    self.headerInfoView.backgroundColor = [UIColor grayColor];
+    self.headerInfoView.alpha = 0.5;
+    [self.view addSubview:self.headerInfoView];
+    
+    UILabel *welcomeLabel = [[UILabel alloc] initWithFrame:CGRectMake(300, 10, 200, 30)];
+    welcomeLabel.font = [UIFont boldSystemFontOfSize:20];
+    welcomeLabel.textColor = [UIColor whiteColor];
+    welcomeLabel.text = @"搬运车导航系统";
+    [self.headerInfoView addSubview:welcomeLabel];
+    
+        //添加下下部信息栏
+        self.footerInfoView = [[UIView alloc] initWithFrame:CGRectMake(0, 562, 683, 206)];
+        self.footerInfoView.backgroundColor = [UIColor grayColor];
+        self.footerInfoView.alpha = 0.5;
+        [self.view addSubview:self.footerInfoView];
+    
+        self.locationTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(250, 30, 100, 30)];
+        self.locationTitleLabel.text = @"目的地:";
+    self.locationTitleLabel.textColor = [UIColor whiteColor];
+        self.locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(400, 30, 100, 30)];
+    self.locationLabel.textColor = [UIColor whiteColor];
 
-- (void)viewWillAppear:(BOOL)animated
-{
+    
+        self.distanceTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(250, 90, 50, 30)];
+        self.distanceTitleLabel.text = @"距离:";
+    self.distanceTitleLabel.textColor = [UIColor whiteColor];
+
+        self.distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(400, 90, 100, 30)];
+    self.distanceLabel.textColor = [UIColor whiteColor];
+
+    
+        self.navigationTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(250, 150, 50, 30)];
+        self.navigationTitleLabel.text = @"导航:";
+    self.navigationTitleLabel.textColor = [UIColor whiteColor];
+
+        self.navigationLabel = [[UILabel alloc] initWithFrame:CGRectMake(400, 150, 200, 30)];
+    self.navigationLabel.textColor = [UIColor whiteColor];
+
+    
+        [self.footerInfoView addSubview:self.locationTitleLabel];
+        [self.footerInfoView addSubview:self.locationLabel];
+        [self.footerInfoView addSubview:self.distanceTitleLabel];
+        [self.footerInfoView addSubview:self.distanceLabel];
+        [self.footerInfoView addSubview:self.navigationTitleLabel];
+        [self.footerInfoView addSubview:self.navigationLabel];
+    
+        self.mapView = [[UIView alloc] initWithFrame:CGRectMake(683, 0, 341, 768)];
+        self.mapView.backgroundColor = [UIColor whiteColor];
+        [self.view addSubview:self.mapView];
+    
+        //mapView上的mywebview
+        self.myWebView = [[UIWebView alloc] initWithFrame:self.mapView.bounds];
+        self.myWebView.backgroundColor = [UIColor whiteColor];
+
+        NSString *localHTMLPageFilePath = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html"];
+        NSURL *localHTMLPageFileURL = [NSURL fileURLWithPath:localHTMLPageFilePath];
+        [self.myWebView loadRequest:[NSURLRequest requestWithURL:localHTMLPageFileURL]];
+        self.myWebView.delegate=self;
+        self.myWebView.scalesPageToFit = YES;
+        [self.mapView addSubview:self.myWebView];
+    
+        //选择目的地butthon和tableview
+        self.destinationArray = @[@"208",@"209"];
+        self.destinationChooseButton = [UIButton buttonWithType:UIButtonTypeContactAdd];
+        self.destinationChooseButton.frame = CGRectMake(screen_width - 50, 10, 50, 50);
+        [self.destinationChooseButton addTarget:self action:@selector(destinationChoose) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:self.destinationChooseButton];
+    
+        self.tableView = [[UITableView alloc] init];
+        self.tableView.delegate = self;
+        self.tableView.dataSource = self;
+        self.tableView.frame = CGRectMake(683, 0, 341, 768);
+    
     //开始搜寻beacon
-    [self startRangingForBeacons];
-    
-    //打开摄像头背景
-    self.picker = [[UIImagePickerController alloc] init];
-    self.picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-    self.picker.showsCameraControls = NO;
-    self.picker.navigationBarHidden = YES;
-    self.picker.toolbarHidden = YES;
-    
-    //叠加摄像头上的overlay
-    self.overlayView = [[UIView alloc] initWithFrame:self.view.frame];
-    
-    //overlay的背景透明
-    self.overlayView.opaque = NO;
-    self.overlayView.backgroundColor = [UIColor clearColor];
-    
-    //功能面板透明度
-    self.controlsView.alpha = 0.9;
-    //overlay上添加右侧的功能面板
-    [self.overlayView addSubview:self.controlsView];
-    //overlay上添加箭头
-    [self setupArrowViewInView:self.overlayView];
-    
-    //1.创建自定义的layer
-//    C3Layer *layer=[C3Layer layer];
-//    layer.bounds=CGRectMake(0, 0, 100, 300);
-//    layer.anchorPoint=CGPointMake(0.5, 0.5);
-    
-//    C3LeftTurnLayer *layer = [C3LeftTurnLayer layer];
-//    layer.bounds=CGRectMake(0, 0, 200, 300);
-//    layer.anchorPoint=CGPointMake(0.75, 0.5);
-    //overlay上添加目的地、距离、导航信息
-    [self.overlayView addSubview:self.distanceLabel];
-    [self.overlayView addSubview:self.locationLabel];
-    [self.overlayView addSubview:self.locationTitleLabel];
-    [self.overlayView addSubview:self.distanceTitleLabel];
-    [self.overlayView addSubview:self.navigationLabel];
-    [self.overlayView addSubview:self.navigationTitleLabel];
-    //overlay置为camera视图的view
-    self.picker.cameraOverlayView = self.overlayView;
-
-    //controlsView上的mywebview
-    NSString *localHTMLPageFilePath = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html"];
-    NSURL *localHTMLPageFileURL = [NSURL fileURLWithPath:localHTMLPageFilePath];
-    [self.myWebView loadRequest:[NSURLRequest requestWithURL:localHTMLPageFileURL]];
-    
-    self.myWebView.delegate=self;
-    self.myWebView.scalesPageToFit = YES;
-    
-    self.destinationArray = @[@"208",@"209"];
-    self.tableView = [[UITableView alloc] init];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    
-    self.tableView.frame = CGRectMake(512, 0, 512, 768);
+        [self startRangingForBeacons];
 
 }
 
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    if (self.session) {
+        [self.session startRunning];
+    }
+    [self setupArrowViewInView:self.view];
+    //隐藏状态栏
+    [[UIApplication sharedApplication] setStatusBarHidden:TRUE];
+
+}
+
+#pragma mark - Perspective  transform
 CATransform3D CATransform3DMakePerspective(CGPoint center, float disZ)
 {
     CATransform3D transToCenter = CATransform3DMakeTranslation(-center.x, -center.y, 0);
@@ -158,17 +263,17 @@ CATransform3D CATransform3DPerspect(CATransform3D t, CGPoint center, float disZ)
     return CATransform3DConcat(t, CATransform3DMakePerspective(center, disZ));
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [self presentViewController:self.picker animated:NO completion:nil];
-}
+//- (void)viewDidAppear:(BOOL)animated
+//{
+////    [self presentViewController:self.picker animated:NO completion:nil];
+//}
 
 #pragma mark - Setup
 
 - (void)setupArrowViewInView:(UIView *)view
 {
-    CGRect frame = CGRectMake(2.0*view.frame.size.width / 10.0,
-                              4*view.frame.size.height / 6.0,
+    CGRect frame = CGRectMake(3.0*view.frame.size.width / 10.0,
+                              1*view.frame.size.height / 6.0,
                               1.0 * view.frame.size.width / 10.0,
                               1* view.frame.size.height / 6.0);
     self.arrowView = [[C3ArrowView alloc] initWithFrame:frame];
@@ -192,9 +297,8 @@ CATransform3D CATransform3DPerspect(CATransform3D t, CGPoint center, float disZ)
 }
 
 #pragma mark - Button actions
-- (IBAction)buttonPressed:(UIButton *)sender {
-    [self.overlayView addSubview:self.tableView];
-    
+- (void)destinationChoose {
+    [self.view addSubview:self.tableView];
 }
 
 #pragma mark - UITableView datasource
@@ -257,7 +361,7 @@ CATransform3D CATransform3DPerspect(CATransform3D t, CGPoint center, float disZ)
                 //2.设置layer的属性
                 self.rightTurnLayer.backgroundColor=[UIColor clearColor].CGColor;
                 self.rightTurnLayer.position=CGPointMake(2.5*self.view.frame.size.width / 10.0,
-                                           2*self.view.frame.size.height / 6.0);
+                                           4*self.view.frame.size.height / 6.0);
                 [self.rightTurnLayer setNeedsDisplay];
                 CATransform3D transform = CATransform3DMakeRotation(M_PI/3, 1, 0, 0);
                 self.rightTurnLayer.transform =  CATransform3DPerspect(transform, CGPointMake(0, 0), 200);
@@ -265,7 +369,7 @@ CATransform3D CATransform3DPerspect(CATransform3D t, CGPoint center, float disZ)
                 self.container = [[CATransformLayer alloc] init];
                 //3.添加layer
                 [self.container addSublayer:self.rightTurnLayer];
-                [self.overlayView.layer addSublayer:self.container];
+                [self.view.layer addSublayer:self.container];
 
             }else if([(NSString *)[components objectAtIndex:1]isEqualToString:@"left"]){
                 direction = @"左转";
@@ -277,7 +381,7 @@ CATransform3D CATransform3DPerspect(CATransform3D t, CGPoint center, float disZ)
                 //2.设置layer的属性
                 self.straightLayer.backgroundColor=[UIColor clearColor].CGColor;
                 self.straightLayer.position=CGPointMake(2.5*self.view.frame.size.width / 10.0,
-                                                         2*self.view.frame.size.height / 6.0);
+                                                         3*self.view.frame.size.height / 6.0);
                 [self.straightLayer setNeedsDisplay];
                 CATransform3D transform = CATransform3DMakeRotation(M_PI/2.23
                                                                     , 1, 0, 0);
@@ -286,7 +390,7 @@ CATransform3D CATransform3DPerspect(CATransform3D t, CGPoint center, float disZ)
                 self.container = [[CATransformLayer alloc] init];
                 //3.添加layer
                 [self.container addSublayer:self.straightLayer];
-                [self.overlayView.layer addSublayer:self.container];
+                [self.view.layer addSublayer:self.container];
             }
         
         distance = [components objectAtIndex:2];

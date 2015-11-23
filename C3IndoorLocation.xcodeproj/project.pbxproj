@@ -10,10 +10,10 @@
 		FE1D553D1BEEDF5400D5AFDC /* C3Layer.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1D553C1BEEDF5400D5AFDC /* C3Layer.m */; };
 		FE1F60951BEF0BEA00C4C618 /* C3LeftTurnLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1F60941BEF0BEA00C4C618 /* C3LeftTurnLayer.m */; };
 		FE1F60981BEF0BFF00C4C618 /* C3RightTurnLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1F60971BEF0BFF00C4C618 /* C3RightTurnLayer.m */; };
+		FE2E69EB1C03619F00AF2118 /* C3Util.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2E69EA1C03619F00AF2118 /* C3Util.m */; };
 		FEA596481BEE18F100E04FAC /* C3LeftArrowView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA596471BEE18F100E04FAC /* C3LeftArrowView.m */; };
 		FEB7DCF81BDD00A0009FCE6D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB7DCF71BDD00A0009FCE6D /* main.m */; };
 		FEB7DCFB1BDD00A0009FCE6D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB7DCFA1BDD00A0009FCE6D /* AppDelegate.m */; };
-		FEB7DD011BDD00A0009FCE6D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DCFF1BDD00A0009FCE6D /* Main.storyboard */; };
 		FEB7DD031BDD00A0009FCE6D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD021BDD00A0009FCE6D /* Assets.xcassets */; };
 		FEB7DD061BDD00A0009FCE6D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD041BDD00A0009FCE6D /* LaunchScreen.storyboard */; };
 		FEB7DD0F1BDD0106009FCE6D /* C3ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB7DD0E1BDD0106009FCE6D /* C3ViewController.m */; };
@@ -43,13 +43,15 @@
 		FE1F60941BEF0BEA00C4C618 /* C3LeftTurnLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = C3LeftTurnLayer.m; sourceTree = "<group>"; };
 		FE1F60961BEF0BFF00C4C618 /* C3RightTurnLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C3RightTurnLayer.h; sourceTree = "<group>"; };
 		FE1F60971BEF0BFF00C4C618 /* C3RightTurnLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = C3RightTurnLayer.m; sourceTree = "<group>"; };
+		FE2E69E91C03619F00AF2118 /* C3Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C3Util.h; sourceTree = "<group>"; };
+		FE2E69EA1C03619F00AF2118 /* C3Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = C3Util.m; sourceTree = "<group>"; };
+		FE2E69EC1C0361EC00AF2118 /* C3Public.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C3Public.h; sourceTree = "<group>"; };
 		FEA596461BEE18F100E04FAC /* C3LeftArrowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C3LeftArrowView.h; sourceTree = "<group>"; };
 		FEA596471BEE18F100E04FAC /* C3LeftArrowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = C3LeftArrowView.m; sourceTree = "<group>"; };
 		FEB7DCF31BDD00A0009FCE6D /* C3IndoorLocation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = C3IndoorLocation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEB7DCF71BDD00A0009FCE6D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		FEB7DCF91BDD00A0009FCE6D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		FEB7DCFA1BDD00A0009FCE6D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		FEB7DD001BDD00A0009FCE6D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FEB7DD021BDD00A0009FCE6D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FEB7DD051BDD00A0009FCE6D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FEB7DD071BDD00A0009FCE6D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -89,6 +91,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FE2E69E81C03617E00AF2118 /* util */ = {
+			isa = PBXGroup;
+			children = (
+				FE2E69E91C03619F00AF2118 /* C3Util.h */,
+				FE2E69EA1C03619F00AF2118 /* C3Util.m */,
+				FE2E69EC1C0361EC00AF2118 /* C3Public.h */,
+			);
+			name = util;
+			sourceTree = "<group>";
+		};
 		FEB7DCEA1BDD00A0009FCE6D = {
 			isa = PBXGroup;
 			children = (
@@ -108,6 +120,7 @@
 		FEB7DCF51BDD00A0009FCE6D /* C3IndoorLocation */ = {
 			isa = PBXGroup;
 			children = (
+				FE2E69E81C03617E00AF2118 /* util */,
 				FEB7DCF91BDD00A0009FCE6D /* AppDelegate.h */,
 				FEB7DCFA1BDD00A0009FCE6D /* AppDelegate.m */,
 				FEB7DD0D1BDD0106009FCE6D /* C3ViewController.h */,
@@ -120,18 +133,17 @@
 				FEB7DD171BDD038C009FCE6D /* CLLocation+AFExtensions.m */,
 				FEB7DD1A1BDD058F009FCE6D /* CLLocationManager+AFExtensions.h */,
 				FEB7DD1B1BDD058F009FCE6D /* CLLocationManager+AFExtensions.m */,
-				FEB7DCFF1BDD00A0009FCE6D /* Main.storyboard */,
-				FEB7DD021BDD00A0009FCE6D /* Assets.xcassets */,
-				FEB7DD041BDD00A0009FCE6D /* LaunchScreen.storyboard */,
-				FEB7DD071BDD00A0009FCE6D /* Info.plist */,
-				FEB7DD1D1BDD0EEC009FCE6D /* Resources */,
-				FEB7DCF61BDD00A0009FCE6D /* Supporting Files */,
 				FE1D553B1BEEDF5400D5AFDC /* C3Layer.h */,
 				FE1D553C1BEEDF5400D5AFDC /* C3Layer.m */,
 				FE1F60931BEF0BEA00C4C618 /* C3LeftTurnLayer.h */,
 				FE1F60941BEF0BEA00C4C618 /* C3LeftTurnLayer.m */,
 				FE1F60961BEF0BFF00C4C618 /* C3RightTurnLayer.h */,
 				FE1F60971BEF0BFF00C4C618 /* C3RightTurnLayer.m */,
+				FEB7DD021BDD00A0009FCE6D /* Assets.xcassets */,
+				FEB7DD041BDD00A0009FCE6D /* LaunchScreen.storyboard */,
+				FEB7DD071BDD00A0009FCE6D /* Info.plist */,
+				FEB7DD1D1BDD0EEC009FCE6D /* Resources */,
+				FEB7DCF61BDD00A0009FCE6D /* Supporting Files */,
 			);
 			path = C3IndoorLocation;
 			sourceTree = "<group>";
@@ -237,7 +249,6 @@
 				FEB7DD421BDD0EEC009FCE6D /* podo.min.js in Resources */,
 				FEB7DD3A1BDD0EEC009FCE6D /* estimote.json in Resources */,
 				FEC204671BFC438400616A9B /* ibeacon.png in Resources */,
-				FEB7DD011BDD00A0009FCE6D /* Main.storyboard in Resources */,
 				FEB7DD3B1BDD0EEC009FCE6D /* index.css in Resources */,
 				FEB7DD391BDD0EEC009FCE6D /* bright.json in Resources */,
 				FEB7DD361BDD0EEC009FCE6D /* april.json in Resources */,
@@ -257,6 +268,7 @@
 			files = (
 				FEB7DD1C1BDD058F009FCE6D /* CLLocationManager+AFExtensions.m in Sources */,
 				FEB7DCFB1BDD00A0009FCE6D /* AppDelegate.m in Sources */,
+				FE2E69EB1C03619F00AF2118 /* C3Util.m in Sources */,
 				FEA596481BEE18F100E04FAC /* C3LeftArrowView.m in Sources */,
 				FE1F60951BEF0BEA00C4C618 /* C3LeftTurnLayer.m in Sources */,
 				FEB7DD181BDD038C009FCE6D /* CLLocation+AFExtensions.m in Sources */,
@@ -271,14 +283,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		FEB7DCFF1BDD00A0009FCE6D /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FEB7DD001BDD00A0009FCE6D /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		FEB7DD041BDD00A0009FCE6D /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -326,7 +330,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -363,7 +367,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -377,6 +381,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "C3IndoorLocation/C3IndoorLocation-PrefixHeader.pch";
 				INFOPLIST_FILE = C3IndoorLocation/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.leyao.qimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -391,6 +396,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "C3IndoorLocation/C3IndoorLocation-PrefixHeader.pch";
 				INFOPLIST_FILE = C3IndoorLocation/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.leyao.qimei;
 				PRODUCT_NAME = "$(TARGET_NAME)";

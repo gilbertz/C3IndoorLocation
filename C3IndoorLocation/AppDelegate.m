@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "C3ViewController.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +18,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    C3ViewController *c3ViewController = [[C3ViewController alloc] init];
+    self.window.rootViewController = c3ViewController;
+
+    [self.window makeKeyAndVisible];
+    
     return YES;
 }
 
