@@ -279,7 +279,8 @@ CATransform3D CATransform3DPerspect(CATransform3D t, CGPoint center, float disZ)
                 self.straightLayer.position=CGPointMake(2.5*self.view.frame.size.width / 10.0,
                                                          2*self.view.frame.size.height / 6.0);
                 [self.straightLayer setNeedsDisplay];
-                CATransform3D transform = CATransform3DMakeRotation(M_PI/3, 1, 0, 0);
+                CATransform3D transform = CATransform3DMakeRotation(M_PI/2.23
+                                                                    , 1, 0, 0);
                 self.straightLayer.transform =  CATransform3DPerspect(transform, CGPointMake(0, 0), 200);
                 [self.container removeFromSuperlayer];
                 self.container = [[CATransformLayer alloc] init];
