@@ -68,6 +68,7 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
 @property (strong, nonatomic)C3LeftTurnLayer *leftTurnLayer;
 @property (assign, nonatomic) BOOL isAddSublayer;
 @property (strong, nonatomic)CATransformLayer *container;
+@property (strong, nonatomic)UIView *directionView;
 @property (strong, nonatomic)UITableView *tableView;
 @property (strong, nonatomic)NSArray *destinationArray;
 
@@ -231,6 +232,8 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
         self.tableView.dataSource = self;
         self.tableView.frame = CGRectMake(683, 0, 341, 768);
     
+        self.directionView = [[UIView alloc] initWithFrame:CGRectMake(screen_width/3, screen_height/2, 200, 400)];
+    [self.view addSubview:self.directionView];
     //开始搜寻beacon
         [self startRangingForBeacons];
 
@@ -273,7 +276,7 @@ CATransform3D CATransform3DPerspect(CATransform3D t, CGPoint center, float disZ)
 - (void)setupArrowViewInView:(UIView *)view
 {
     CGRect frame = CGRectMake(3.0*view.frame.size.width / 10.0,
-                              1*view.frame.size.height / 6.0,
+                              1*view.frame.size.height / 10.0,
                               1.0 * view.frame.size.width / 10.0,
                               1* view.frame.size.height / 6.0);
     self.arrowView = [[C3ArrowView alloc] initWithFrame:frame];
@@ -351,46 +354,38 @@ CATransform3D CATransform3DPerspect(CATransform3D t, CGPoint center, float disZ)
     //判断是否是产生距离信息的url
     BOOL isGenerate = [(NSString *)[components objectAtIndex:0]isEqualToString:@"generate"];
     if (isGenerate) {
-            //过滤请求是否是我们需要的.不需要的请求不进入条件
             if([(NSString *)[components objectAtIndex:1]isEqualToString:@"right"])
             {
                 direction = @"右转";
                 self.rightTurnLayer = [C3RightTurnLayer layer];
-                self.rightTurnLayer.bounds=CGRectMake(0, 0, 200, 300);
+                self.rightTurnLayer.bounds=self.directionView.bounds;
                 self.rightTurnLayer.anchorPoint=CGPointMake(0.25, 0.5);
-                //2.设置layer的属性
                 self.rightTurnLayer.backgroundColor=[UIColor clearColor].CGColor;
-                self.rightTurnLayer.position=CGPointMake(2.5*self.view.frame.size.width / 10.0,
-                                           4*self.view.frame.size.height / 6.0);
                 [self.rightTurnLayer setNeedsDisplay];
                 CATransform3D transform = CATransform3DMakeRotation(M_PI/3, 1, 0, 0);
                 self.rightTurnLayer.transform =  CATransform3DPerspect(transform, CGPointMake(0, 0), 200);
                 [self.container removeFromSuperlayer];
                 self.container = [[CATransformLayer alloc] init];
-                //3.添加layer
                 [self.container addSublayer:self.rightTurnLayer];
-                [self.view.layer addSublayer:self.container];
+                [self.directionView.layer addSublayer:self.container];
 
             }else if([(NSString *)[components objectAtIndex:1]isEqualToString:@"left"]){
                 direction = @"左转";
             }else if([(NSString *)[components objectAtIndex:1]isEqualToString:@"straight"]){
                 direction = @"直行";
                 self.straightLayer = [C3Layer layer];
-                self.straightLayer.bounds=CGRectMake(0, 0, 200, 300);
+                self.straightLayer.bounds=self.directionView.bounds;
                 self.straightLayer.anchorPoint=CGPointMake(0.25, 0.5);
-                //2.设置layer的属性
                 self.straightLayer.backgroundColor=[UIColor clearColor].CGColor;
-                self.straightLayer.position=CGPointMake(2.5*self.view.frame.size.width / 10.0,
-                                                         3*self.view.frame.size.height / 6.0);
                 [self.straightLayer setNeedsDisplay];
-                CATransform3D transform = CATransform3DMakeRotation(M_PI/2.23
+                CATransform3D transform = CATransform3DMakeRotation(M_PI/3
                                                                     , 1, 0, 0);
                 self.straightLayer.transform =  CATransform3DPerspect(transform, CGPointMake(0, 0), 200);
                 [self.container removeFromSuperlayer];
                 self.container = [[CATransformLayer alloc] init];
-                //3.添加layer
                 [self.container addSublayer:self.straightLayer];
-                [self.view.layer addSublayer:self.container];
+                [self.directionView.layer addSublayer:self.container];
+
             }
         
         distance = [components objectAtIndex:2];
