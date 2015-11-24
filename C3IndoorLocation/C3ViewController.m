@@ -10,11 +10,12 @@
 #import "C3ArrowView.h"
 #import "CLLocationManager+AFExtensions.h"
 #import <CoreBluetooth/CoreBluetooth.h>
-#import "C3Layer.h"
+#import "C3StraightLayer.h"
 #import "C3LeftTurnLayer.h"
 #import "C3RightTurnLayer.h"
 #import <AVFoundation/AVFoundation.h>
 
+#define  ARCHITECTSCALE 20
 //weixin
 //static NSString * const kUUID = @"FDA50693-A4E2-4FB1-AFCF-C6EB07647825";
 //yunzi
@@ -25,8 +26,6 @@ static NSString * const kUUID = @"B9407F30-F5F8-466E-AFF9-25556B57FE6D";
 //static NSString * const kUUID = @"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0";
 //april
 //static NSString * const kUUID = @"B5B182C7-EAB1-4988-AA99-B5C1517008D9";
-
-#define  ARCHITECTSCALE 20
 
 static NSString * const kIdentifier = @"SomeIdentifier";
 static void * const kMonitoringOperationContext = (void *)&kMonitoringOperationContext;
@@ -61,7 +60,7 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
 @property (strong, nonatomic) UIWebView *myWebView;
 @property (strong, nonatomic) UIView *overlayView;
 @property (strong, nonatomic) C3RightTurnLayer *rightTurnLayer;
-@property (strong, nonatomic) C3Layer *straightLayer;
+@property (strong, nonatomic) C3StraightLayer *straightLayer;
 @property (strong, nonatomic) C3LeftTurnLayer *leftTurnLayer;
 @property (assign, nonatomic) BOOL isAddSublayer;
 @property (strong, nonatomic) CATransformLayer *container;
@@ -138,8 +137,7 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
         
         CATransform3D transform = CATransform3DMakeRotation(3*M_PI/2, 0, 0, 1);
         self.cameraShowView.layer.transform =  transform;
-        
-        
+
     }
 }
 
@@ -368,7 +366,7 @@ CATransform3D CATransform3DPerspect(CATransform3D t, CGPoint center, float disZ)
             [self.directionView.layer addSublayer:self.container];
         }else if([(NSString *)[components objectAtIndex:1]isEqualToString:@"straight"]){
             direction = @"直行";
-            self.straightLayer = [C3Layer layer];
+            self.straightLayer = [C3StraightLayer layer];
             self.straightLayer.bounds=self.directionView.bounds;
             self.straightLayer.anchorPoint=CGPointMake(0.25, 0.5);
             self.straightLayer.backgroundColor=[UIColor clearColor].CGColor;

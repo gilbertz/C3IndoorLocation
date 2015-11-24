@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FE1D553D1BEEDF5400D5AFDC /* C3Layer.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1D553C1BEEDF5400D5AFDC /* C3Layer.m */; };
+		FE1D553D1BEEDF5400D5AFDC /* C3StraightLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1D553C1BEEDF5400D5AFDC /* C3StraightLayer.m */; };
 		FE1F60951BEF0BEA00C4C618 /* C3LeftTurnLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1F60941BEF0BEA00C4C618 /* C3LeftTurnLayer.m */; };
 		FE1F60981BEF0BFF00C4C618 /* C3RightTurnLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1F60971BEF0BFF00C4C618 /* C3RightTurnLayer.m */; };
 		FE2E69EB1C03619F00AF2118 /* C3Util.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2E69EA1C03619F00AF2118 /* C3Util.m */; };
@@ -36,8 +36,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		FE1D553B1BEEDF5400D5AFDC /* C3Layer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C3Layer.h; sourceTree = "<group>"; };
-		FE1D553C1BEEDF5400D5AFDC /* C3Layer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = C3Layer.m; sourceTree = "<group>"; };
+		FE1D553B1BEEDF5400D5AFDC /* C3StraightLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C3StraightLayer.h; sourceTree = "<group>"; };
+		FE1D553C1BEEDF5400D5AFDC /* C3StraightLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = C3StraightLayer.m; sourceTree = "<group>"; };
 		FE1F60931BEF0BEA00C4C618 /* C3LeftTurnLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C3LeftTurnLayer.h; sourceTree = "<group>"; };
 		FE1F60941BEF0BEA00C4C618 /* C3LeftTurnLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = C3LeftTurnLayer.m; sourceTree = "<group>"; };
 		FE1F60961BEF0BFF00C4C618 /* C3RightTurnLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C3RightTurnLayer.h; sourceTree = "<group>"; };
@@ -128,8 +128,8 @@
 				FEB7DD171BDD038C009FCE6D /* CLLocation+AFExtensions.m */,
 				FEB7DD1A1BDD058F009FCE6D /* CLLocationManager+AFExtensions.h */,
 				FEB7DD1B1BDD058F009FCE6D /* CLLocationManager+AFExtensions.m */,
-				FE1D553B1BEEDF5400D5AFDC /* C3Layer.h */,
-				FE1D553C1BEEDF5400D5AFDC /* C3Layer.m */,
+				FE1D553B1BEEDF5400D5AFDC /* C3StraightLayer.h */,
+				FE1D553C1BEEDF5400D5AFDC /* C3StraightLayer.m */,
 				FE1F60931BEF0BEA00C4C618 /* C3LeftTurnLayer.h */,
 				FE1F60941BEF0BEA00C4C618 /* C3LeftTurnLayer.m */,
 				FE1F60961BEF0BFF00C4C618 /* C3RightTurnLayer.h */,
@@ -269,7 +269,7 @@
 				FEB7DD0F1BDD0106009FCE6D /* C3ViewController.m in Sources */,
 				FEB7DD121BDD013B009FCE6D /* C3ArrowView.m in Sources */,
 				FEB7DCF81BDD00A0009FCE6D /* main.m in Sources */,
-				FE1D553D1BEEDF5400D5AFDC /* C3Layer.m in Sources */,
+				FE1D553D1BEEDF5400D5AFDC /* C3StraightLayer.m in Sources */,
 				FE1F60981BEF0BFF00C4C618 /* C3RightTurnLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

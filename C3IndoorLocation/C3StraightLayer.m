@@ -6,9 +6,9 @@
 //  Copyright © 2015年 zhaoguoqi. All rights reserved.
 //
 
-#import "C3Layer.h"
+#import "C3StraightLayer.h"
 
-@implementation C3Layer
+@implementation C3StraightLayer
 
 -(void)drawInContext:(CGContextRef)ctx
 {

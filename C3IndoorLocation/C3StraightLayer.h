@@ -8,6 +8,6 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-@interface C3Layer : CALayer
+@interface C3StraightLayer : CALayer
 
 @end
