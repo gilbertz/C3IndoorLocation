@@ -222,8 +222,10 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
     
         //选择目的地butthon和tableview
         self.destinationArray = @[@"208",@"209"];
-        self.destinationChooseButton = [UIButton buttonWithType:UIButtonTypeContactAdd];
-        self.destinationChooseButton.frame = CGRectMake(screen_width - 50, 10, 50, 50);
+        self.destinationChooseButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.destinationChooseButton setImage:[UIImage imageNamed:@"list"] forState:UIControlStateHighlighted];
+    [self.destinationChooseButton setImage:[UIImage imageNamed:@"list"] forState:UIControlStateNormal];
+        self.destinationChooseButton.frame = CGRectMake(screen_width - 50, 30, 30, 30);
         [self.destinationChooseButton addTarget:self action:@selector(destinationChoose) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:self.destinationChooseButton];
     
