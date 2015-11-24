@@ -10,7 +10,6 @@
 #import "C3ArrowView.h"
 #import "CLLocationManager+AFExtensions.h"
 #import <CoreBluetooth/CoreBluetooth.h>
-#import "C3LeftArrowView.h"
 #import "C3Layer.h"
 #import "C3LeftTurnLayer.h"
 #import "C3RightTurnLayer.h"
@@ -45,8 +44,6 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
 @interface C3ViewController ()<C3ArrowViewDelegate,UIWebViewDelegate,CLLocationManagerDelegate,UITableViewDataSource,UITableViewDelegate>
 
 @property (strong, nonatomic) C3ArrowView *arrowView;
-@property (strong, nonatomic) C3LeftArrowView *leftArrowView;
-
 @property (strong, nonatomic) UILabel *navigationLabel;
 @property (strong, nonatomic) UILabel *navigationTitleLabel;
 @property (strong, nonatomic) UILabel *locationLabel;
@@ -62,31 +59,28 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
 @property (nonatomic, weak) UISwitch *rangingSwitch;
 @property (nonatomic, unsafe_unretained) void *operationContext;
 @property (strong, nonatomic) UIWebView *myWebView;
-@property (strong, nonatomic)UIView *overlayView;
-@property (strong, nonatomic)C3RightTurnLayer *rightTurnLayer;
-@property (strong, nonatomic)C3Layer *straightLayer;
-@property (strong, nonatomic)C3LeftTurnLayer *leftTurnLayer;
+@property (strong, nonatomic) UIView *overlayView;
+@property (strong, nonatomic) C3RightTurnLayer *rightTurnLayer;
+@property (strong, nonatomic) C3Layer *straightLayer;
+@property (strong, nonatomic) C3LeftTurnLayer *leftTurnLayer;
 @property (assign, nonatomic) BOOL isAddSublayer;
-@property (strong, nonatomic)CATransformLayer *container;
-@property (strong, nonatomic)UIView *directionView;
-@property (strong, nonatomic)UITableView *tableView;
-@property (strong, nonatomic)NSArray *destinationArray;
-
-@property (nonatomic, strong)       AVCaptureSession            * session;
+@property (strong, nonatomic) CATransformLayer *container;
+@property (strong, nonatomic) UIView *directionView;
+@property (strong, nonatomic) UITableView *tableView;
+@property (strong, nonatomic) NSArray *destinationArray;
 //AVCaptureSession对象来执行输入设备和输出设备之间的数据传递
-@property (nonatomic, strong)       AVCaptureDeviceInput        * videoInput;
+@property (nonatomic, strong) AVCaptureSession * session;
 //AVCaptureDeviceInput对象是输入流
-@property (nonatomic, strong)       AVCaptureStillImageOutput   * stillImageOutput;
+@property (nonatomic, strong) AVCaptureDeviceInput * videoInput;
 //照片输出流对象，当然我的照相机只有拍照功能，所以只需要这个对象就够了
-@property (nonatomic, strong)       AVCaptureVideoPreviewLayer  * previewLayer;
+@property (nonatomic, strong) AVCaptureStillImageOutput * stillImageOutput;
 //预览图层，来显示照相机拍摄到的画面
-@property (nonatomic, strong)       UIView                      * cameraShowView;
+@property (nonatomic, strong) AVCaptureVideoPreviewLayer  * previewLayer;
 //放置预览图层的View
-
+@property (nonatomic, strong) UIView * cameraShowView;
 //信息栏
 @property (nonatomic, strong)UIView *footerInfoView ;
 @property (nonatomic, strong)UIView *headerInfoView ;
-
 @property (nonatomic, strong)UIButton *destinationChooseButton;
 
 @end
@@ -138,7 +132,7 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
         
         CGRect bounds = [view bounds];
         [self.previewLayer setFrame:bounds];
-
+        
         [self.previewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
         [viewLayer insertSublayer:self.previewLayer below:[[viewLayer sublayers] objectAtIndex:0]];
         
@@ -169,76 +163,76 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
     welcomeLabel.text = @"搬运车导航系统";
     [self.headerInfoView addSubview:welcomeLabel];
     
-        //添加下下部信息栏
-        self.footerInfoView = [[UIView alloc] initWithFrame:CGRectMake(0, 562, 683, 206)];
-        self.footerInfoView.backgroundColor = [UIColor grayColor];
-        self.footerInfoView.alpha = 0.5;
-        [self.view addSubview:self.footerInfoView];
+    //添加下下部信息栏
+    self.footerInfoView = [[UIView alloc] initWithFrame:CGRectMake(0, 562, 683, 206)];
+    self.footerInfoView.backgroundColor = [UIColor grayColor];
+    self.footerInfoView.alpha = 0.5;
+    [self.view addSubview:self.footerInfoView];
     
-        self.locationTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(250, 30, 100, 30)];
-        self.locationTitleLabel.text = @"目的地:";
+    self.locationTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(250, 30, 100, 30)];
+    self.locationTitleLabel.text = @"目的地:";
     self.locationTitleLabel.textColor = [UIColor whiteColor];
-        self.locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(400, 30, 100, 30)];
+    self.locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(400, 30, 100, 30)];
     self.locationLabel.textColor = [UIColor whiteColor];
-
     
-        self.distanceTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(250, 90, 50, 30)];
-        self.distanceTitleLabel.text = @"距离:";
+    
+    self.distanceTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(250, 90, 50, 30)];
+    self.distanceTitleLabel.text = @"距离:";
     self.distanceTitleLabel.textColor = [UIColor whiteColor];
-
-        self.distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(400, 90, 100, 30)];
+    
+    self.distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(400, 90, 100, 30)];
     self.distanceLabel.textColor = [UIColor whiteColor];
-
     
-        self.navigationTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(250, 150, 50, 30)];
-        self.navigationTitleLabel.text = @"导航:";
+    
+    self.navigationTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(250, 150, 50, 30)];
+    self.navigationTitleLabel.text = @"导航:";
     self.navigationTitleLabel.textColor = [UIColor whiteColor];
-
-        self.navigationLabel = [[UILabel alloc] initWithFrame:CGRectMake(400, 150, 200, 30)];
+    
+    self.navigationLabel = [[UILabel alloc] initWithFrame:CGRectMake(400, 150, 200, 30)];
     self.navigationLabel.textColor = [UIColor whiteColor];
-
     
-        [self.footerInfoView addSubview:self.locationTitleLabel];
-        [self.footerInfoView addSubview:self.locationLabel];
-        [self.footerInfoView addSubview:self.distanceTitleLabel];
-        [self.footerInfoView addSubview:self.distanceLabel];
-        [self.footerInfoView addSubview:self.navigationTitleLabel];
-        [self.footerInfoView addSubview:self.navigationLabel];
     
-        self.mapView = [[UIView alloc] initWithFrame:CGRectMake(683, 0, 341, 768)];
-        self.mapView.backgroundColor = [UIColor whiteColor];
-        [self.view addSubview:self.mapView];
+    [self.footerInfoView addSubview:self.locationTitleLabel];
+    [self.footerInfoView addSubview:self.locationLabel];
+    [self.footerInfoView addSubview:self.distanceTitleLabel];
+    [self.footerInfoView addSubview:self.distanceLabel];
+    [self.footerInfoView addSubview:self.navigationTitleLabel];
+    [self.footerInfoView addSubview:self.navigationLabel];
     
-        //mapView上的mywebview
-        self.myWebView = [[UIWebView alloc] initWithFrame:self.mapView.bounds];
-        self.myWebView.backgroundColor = [UIColor whiteColor];
-
-        NSString *localHTMLPageFilePath = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html"];
-        NSURL *localHTMLPageFileURL = [NSURL fileURLWithPath:localHTMLPageFilePath];
-        [self.myWebView loadRequest:[NSURLRequest requestWithURL:localHTMLPageFileURL]];
-        self.myWebView.delegate=self;
-        self.myWebView.scalesPageToFit = YES;
-        [self.mapView addSubview:self.myWebView];
+    self.mapView = [[UIView alloc] initWithFrame:CGRectMake(683, 0, 341, 768)];
+    self.mapView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:self.mapView];
     
-        //选择目的地butthon和tableview
-        self.destinationArray = @[@"208",@"209"];
-        self.destinationChooseButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    //mapView上的mywebview
+    self.myWebView = [[UIWebView alloc] initWithFrame:self.mapView.bounds];
+    self.myWebView.backgroundColor = [UIColor whiteColor];
+    
+    NSString *localHTMLPageFilePath = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html"];
+    NSURL *localHTMLPageFileURL = [NSURL fileURLWithPath:localHTMLPageFilePath];
+    [self.myWebView loadRequest:[NSURLRequest requestWithURL:localHTMLPageFileURL]];
+    self.myWebView.delegate=self;
+    self.myWebView.scalesPageToFit = YES;
+    [self.mapView addSubview:self.myWebView];
+    
+    //选择目的地butthon和tableview
+    self.destinationArray = @[@"208",@"209"];
+    self.destinationChooseButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.destinationChooseButton setImage:[UIImage imageNamed:@"list"] forState:UIControlStateHighlighted];
     [self.destinationChooseButton setImage:[UIImage imageNamed:@"list"] forState:UIControlStateNormal];
-        self.destinationChooseButton.frame = CGRectMake(screen_width - 50, 30, 30, 30);
-        [self.destinationChooseButton addTarget:self action:@selector(destinationChoose) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:self.destinationChooseButton];
+    self.destinationChooseButton.frame = CGRectMake(screen_width - 50, 30, 30, 30);
+    [self.destinationChooseButton addTarget:self action:@selector(destinationChoose) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.destinationChooseButton];
     
-        self.tableView = [[UITableView alloc] init];
-        self.tableView.delegate = self;
-        self.tableView.dataSource = self;
-        self.tableView.frame = CGRectMake(683, 0, 341, 768);
+    self.tableView = [[UITableView alloc] init];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.frame = CGRectMake(683, 0, 341, 768);
     
-        self.directionView = [[UIView alloc] initWithFrame:CGRectMake(screen_width/3, screen_height/2, 200, 400)];
+    self.directionView = [[UIView alloc] initWithFrame:CGRectMake(screen_width/3, screen_height/2, 200, 400)];
     [self.view addSubview:self.directionView];
     //开始搜寻beacon
-        [self startRangingForBeacons];
-
+    [self startRangingForBeacons];
+    
 }
 
 - (void) viewDidAppear:(BOOL)animated
@@ -250,7 +244,7 @@ typedef NS_ENUM(NSUInteger, NTOperationsRow) {
     [self setupArrowViewInView:self.view];
     //隐藏状态栏
     [[UIApplication sharedApplication] setStatusBarHidden:TRUE];
-
+    
 }
 
 #pragma mark - Perspective  transform
@@ -268,11 +262,6 @@ CATransform3D CATransform3DPerspect(CATransform3D t, CGPoint center, float disZ)
     return CATransform3DConcat(t, CATransform3DMakePerspective(center, disZ));
 }
 
-//- (void)viewDidAppear:(BOOL)animated
-//{
-////    [self presentViewController:self.picker animated:NO completion:nil];
-//}
-
 #pragma mark - Setup
 
 - (void)setupArrowViewInView:(UIView *)view
@@ -284,13 +273,6 @@ CATransform3D CATransform3DPerspect(CATransform3D t, CGPoint center, float disZ)
     self.arrowView = [[C3ArrowView alloc] initWithFrame:frame];
     self.arrowView.delegate = self;
     [view addSubview:self.arrowView];
-    
-//    CGRect frame2 = CGRectMake(2.0*view.frame.size.width / 10.0,
-//                              2*view.frame.size.height / 6.0,
-//                              1.0 * view.frame.size.width / 10.0,
-//                              1* view.frame.size.height / 6.0);
-//    self.leftArrowView = [[C3LeftArrowView alloc] initWithFrame:frame2];
-//    [view addSubview:self.leftArrowView];
 }
 
 #pragma mark - NAArrowViewDelegate
@@ -298,7 +280,7 @@ CATransform3D CATransform3DPerspect(CATransform3D t, CGPoint center, float disZ)
 - (void)locationManager:(CLLocationManager *)manager
      didUpdateLocations:(NSArray *)locations
 {
-//        self.distanceLabel.text = [manager distanceToLocation:self.arrowView.destination];
+    //        self.distanceLabel.text = [manager distanceToLocation:self.arrowView.destination];
 }
 
 #pragma mark - Button actions
@@ -322,7 +304,7 @@ CATransform3D CATransform3DPerspect(CATransform3D t, CGPoint center, float disZ)
 
 #pragma mark - UITableView delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-
+    
     self.locationLabel.text = self.destinationArray[indexPath.row];
     NSString *jsonDataString = [NSString stringWithFormat:@"button(%@)",self.destinationArray[indexPath.row]];
     [self.myWebView stringByEvaluatingJavaScriptFromString:jsonDataString];
@@ -356,39 +338,50 @@ CATransform3D CATransform3DPerspect(CATransform3D t, CGPoint center, float disZ)
     //判断是否是产生距离信息的url
     BOOL isGenerate = [(NSString *)[components objectAtIndex:0]isEqualToString:@"generate"];
     if (isGenerate) {
-            if([(NSString *)[components objectAtIndex:1]isEqualToString:@"right"])
-            {
-                direction = @"右转";
-                self.rightTurnLayer = [C3RightTurnLayer layer];
-                self.rightTurnLayer.bounds=self.directionView.bounds;
-                self.rightTurnLayer.anchorPoint=CGPointMake(0.25, 0.5);
-                self.rightTurnLayer.backgroundColor=[UIColor clearColor].CGColor;
-                [self.rightTurnLayer setNeedsDisplay];
-                CATransform3D transform = CATransform3DMakeRotation(M_PI/3, 1, 0, 0);
-                self.rightTurnLayer.transform =  CATransform3DPerspect(transform, CGPointMake(0, 0), 200);
-                [self.container removeFromSuperlayer];
-                self.container = [[CATransformLayer alloc] init];
-                [self.container addSublayer:self.rightTurnLayer];
-                [self.directionView.layer addSublayer:self.container];
-
-            }else if([(NSString *)[components objectAtIndex:1]isEqualToString:@"left"]){
-                direction = @"左转";
-            }else if([(NSString *)[components objectAtIndex:1]isEqualToString:@"straight"]){
-                direction = @"直行";
-                self.straightLayer = [C3Layer layer];
-                self.straightLayer.bounds=self.directionView.bounds;
-                self.straightLayer.anchorPoint=CGPointMake(0.25, 0.5);
-                self.straightLayer.backgroundColor=[UIColor clearColor].CGColor;
-                [self.straightLayer setNeedsDisplay];
-                CATransform3D transform = CATransform3DMakeRotation(M_PI/3
-                                                                    , 1, 0, 0);
-                self.straightLayer.transform =  CATransform3DPerspect(transform, CGPointMake(0, 0), 200);
-                [self.container removeFromSuperlayer];
-                self.container = [[CATransformLayer alloc] init];
-                [self.container addSublayer:self.straightLayer];
-                [self.directionView.layer addSublayer:self.container];
-
-            }
+        if([(NSString *)[components objectAtIndex:1]isEqualToString:@"right"])
+        {
+            direction = @"右转";
+            self.rightTurnLayer = [C3RightTurnLayer layer];
+            self.rightTurnLayer.bounds=self.directionView.bounds;
+            self.rightTurnLayer.anchorPoint=CGPointMake(0.25, 0.5);
+            self.rightTurnLayer.backgroundColor=[UIColor clearColor].CGColor;
+            [self.rightTurnLayer setNeedsDisplay];
+            CATransform3D transform = CATransform3DMakeRotation(M_PI/3, 1, 0, 0);
+            self.rightTurnLayer.transform =  CATransform3DPerspect(transform, CGPointMake(0, 0), 200);
+            [self.container removeFromSuperlayer];
+            self.container = [[CATransformLayer alloc] init];
+            [self.container addSublayer:self.rightTurnLayer];
+            [self.directionView.layer addSublayer:self.container];
+            
+        }else if([(NSString *)[components objectAtIndex:1]isEqualToString:@"left"]){
+            direction = @"左转";
+            self.leftTurnLayer = [C3LeftTurnLayer layer];
+            self.leftTurnLayer.bounds=self.directionView.bounds;
+            self.leftTurnLayer.anchorPoint=CGPointMake(0.25, 0.5);
+            self.leftTurnLayer.backgroundColor=[UIColor clearColor].CGColor;
+            [self.leftTurnLayer setNeedsDisplay];
+            CATransform3D transform = CATransform3DMakeRotation(M_PI/3, 1, 0, 0);
+            self.leftTurnLayer.transform =  CATransform3DPerspect(transform, CGPointMake(0, 0), 200);
+            [self.container removeFromSuperlayer];
+            self.container = [[CATransformLayer alloc] init];
+            [self.container addSublayer:self.leftTurnLayer];
+            [self.directionView.layer addSublayer:self.container];
+        }else if([(NSString *)[components objectAtIndex:1]isEqualToString:@"straight"]){
+            direction = @"直行";
+            self.straightLayer = [C3Layer layer];
+            self.straightLayer.bounds=self.directionView.bounds;
+            self.straightLayer.anchorPoint=CGPointMake(0.25, 0.5);
+            self.straightLayer.backgroundColor=[UIColor clearColor].CGColor;
+            [self.straightLayer setNeedsDisplay];
+            CATransform3D transform = CATransform3DMakeRotation(M_PI/3
+                                                                , 1, 0, 0);
+            self.straightLayer.transform =  CATransform3DPerspect(transform, CGPointMake(0, 0), 200);
+            [self.container removeFromSuperlayer];
+            self.container = [[CATransformLayer alloc] init];
+            [self.container addSublayer:self.straightLayer];
+            [self.directionView.layer addSublayer:self.container];
+            
+        }
         
         distance = [components objectAtIndex:2];
         totalDistance = [components objectAtIndex:3];
@@ -415,12 +408,12 @@ CATransform3D CATransform3DPerspect(CATransform3D t, CGPoint center, float disZ)
         }else{
             self.locationLabel.text = [components objectAtIndex:4];
         };
-
+        
         //检测到的beacon数组
         NSMutableArray *dictArr = [NSMutableArray array];
         for (int i = 0; i < self.detectedBeacons.count; i++) {
             CLBeacon *beacon = self.detectedBeacons[i];
-
+            
             NSString *rssiString = [NSString stringWithFormat:@"%ld", labs(beacon.rssi)];
             NSDictionary *dict = [NSMutableDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithFloat:[beacon.minor floatValue]],@"minor",[NSNumber numberWithFloat:[beacon.major floatValue]],@"major", [NSNumber numberWithInt:[rssiString intValue]] ,@"rssi",[NSNumber numberWithInt:59],@"measuredPower",nil];
             [dictArr addObject:dict];
@@ -439,9 +432,7 @@ CATransform3D CATransform3DPerspect(CATransform3D t, CGPoint center, float disZ)
 - (NSData *)toJSONData:(id)theData{
     
     NSError *error = nil;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:theData
-                                                       options:NSJSONWritingPrettyPrinted
-                                                         error:&error];
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:theData options:NSJSONWritingPrettyPrinted error:&error];
     if ([jsonData length] > 0 && error == nil){
         return jsonData;
     }else{
@@ -454,7 +445,6 @@ CATransform3D CATransform3DPerspect(CATransform3D t, CGPoint center, float disZ)
 {
     if (self.beaconRegion)
         return;
-    
     NSUUID *proximityUUID = [[NSUUID alloc] initWithUUIDString:kUUID];
     self.beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:proximityUUID identifier:kIdentifier];
     self.beaconRegion.notifyEntryStateOnDisplay = YES;
@@ -510,9 +500,7 @@ CATransform3D CATransform3DPerspect(CATransform3D t, CGPoint center, float disZ)
     
     [self.locationManager stopRangingBeaconsInRegion:self.beaconRegion];
     
-    
     self.detectedBeacons = [NSArray array];
-    
     
     NSLog(@"Turned off ranging.");
 }
@@ -580,7 +568,6 @@ CATransform3D CATransform3DPerspect(CATransform3D t, CGPoint center, float disZ)
         
     }
     self.detectedBeacons = filteredBeacons;
-
 }
 
 #pragma mark - Location access methods (iOS8/Xcode6)

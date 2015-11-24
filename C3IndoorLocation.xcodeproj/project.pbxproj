@@ -11,7 +11,6 @@
 		FE1F60951BEF0BEA00C4C618 /* C3LeftTurnLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1F60941BEF0BEA00C4C618 /* C3LeftTurnLayer.m */; };
 		FE1F60981BEF0BFF00C4C618 /* C3RightTurnLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = FE1F60971BEF0BFF00C4C618 /* C3RightTurnLayer.m */; };
 		FE2E69EB1C03619F00AF2118 /* C3Util.m in Sources */ = {isa = PBXBuildFile; fileRef = FE2E69EA1C03619F00AF2118 /* C3Util.m */; };
-		FEA596481BEE18F100E04FAC /* C3LeftArrowView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA596471BEE18F100E04FAC /* C3LeftArrowView.m */; };
 		FEB7DCF81BDD00A0009FCE6D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB7DCF71BDD00A0009FCE6D /* main.m */; };
 		FEB7DCFB1BDD00A0009FCE6D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FEB7DCFA1BDD00A0009FCE6D /* AppDelegate.m */; };
 		FEB7DD031BDD00A0009FCE6D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FEB7DD021BDD00A0009FCE6D /* Assets.xcassets */; };
@@ -46,8 +45,6 @@
 		FE2E69E91C03619F00AF2118 /* C3Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C3Util.h; sourceTree = "<group>"; };
 		FE2E69EA1C03619F00AF2118 /* C3Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = C3Util.m; sourceTree = "<group>"; };
 		FE2E69EC1C0361EC00AF2118 /* C3Public.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = C3Public.h; sourceTree = "<group>"; };
-		FEA596461BEE18F100E04FAC /* C3LeftArrowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = C3LeftArrowView.h; sourceTree = "<group>"; };
-		FEA596471BEE18F100E04FAC /* C3LeftArrowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = C3LeftArrowView.m; sourceTree = "<group>"; };
 		FEB7DCF31BDD00A0009FCE6D /* C3IndoorLocation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = C3IndoorLocation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEB7DCF71BDD00A0009FCE6D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		FEB7DCF91BDD00A0009FCE6D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -127,8 +124,6 @@
 				FEB7DD0E1BDD0106009FCE6D /* C3ViewController.m */,
 				FEB7DD101BDD013B009FCE6D /* C3ArrowView.h */,
 				FEB7DD111BDD013B009FCE6D /* C3ArrowView.m */,
-				FEA596461BEE18F100E04FAC /* C3LeftArrowView.h */,
-				FEA596471BEE18F100E04FAC /* C3LeftArrowView.m */,
 				FEB7DD161BDD038C009FCE6D /* CLLocation+AFExtensions.h */,
 				FEB7DD171BDD038C009FCE6D /* CLLocation+AFExtensions.m */,
 				FEB7DD1A1BDD058F009FCE6D /* CLLocationManager+AFExtensions.h */,
@@ -269,7 +264,6 @@
 				FEB7DD1C1BDD058F009FCE6D /* CLLocationManager+AFExtensions.m in Sources */,
 				FEB7DCFB1BDD00A0009FCE6D /* AppDelegate.m in Sources */,
 				FE2E69EB1C03619F00AF2118 /* C3Util.m in Sources */,
-				FEA596481BEE18F100E04FAC /* C3LeftArrowView.m in Sources */,
 				FE1F60951BEF0BEA00C4C618 /* C3LeftTurnLayer.m in Sources */,
 				FEB7DD181BDD038C009FCE6D /* CLLocation+AFExtensions.m in Sources */,
 				FEB7DD0F1BDD0106009FCE6D /* C3ViewController.m in Sources */,
